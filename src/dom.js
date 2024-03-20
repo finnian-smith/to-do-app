@@ -1,16 +1,31 @@
-// testing project list
-function renderProjectList(projects, container) {
-  const projectListElement = document.createElement("div");
-  projectListElement.classList.add("project-list");
-  container.appendChild(projectListElement);
+import ProjectList from "./components/project-list.js";
 
-  projects.forEach((project) => {
-    const projectItem = document.createElement("p"); // button?
-    projectItem.classList.add("project-list-item");
-    projectItem.textContent = `${project.title}`;
-    projectListElement.appendChild(projectItem);
-  });
-}
+// project list
+const projects = [
+  {
+    title: "General",
+    todoItems: [
+      ["Buy milk", "2024-03-25", "High", "Shopping"],
+      ["Gym", "2024-03-25", "Medium", "Personal"],
+      ["Gym", "2024-03-27", "Medium", "Personal"],
+    ],
+  },
+  {
+    title: "Shopping",
+    todoItems: [["Buy milk", "2024-03-25", "High", "Shopping"]],
+  },
+  {
+    title: "Personal",
+    todoItems: [
+      ["Gym", "2024-03-25", "Medium", "Personal"],
+      ["Gym", "2024-03-27", "Medium", "Personal"],
+    ],
+  },
+];
+
+const container = document.querySelector("#project-list-section");
+const projectList = new ProjectList(projects, container);
+projectList.render();
 
 // original
 function renderProject(project, container) {
@@ -58,4 +73,4 @@ function addEventHandlers(app) {
   });
 }
 
-export { renderProjectList, renderProject }; // add in "addEventHandlers" here
+export { renderProject }; // add in "addEventHandlers" here

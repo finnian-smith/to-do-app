@@ -1,0 +1,41 @@
+#project-list-section {
+  padding: 20px;
+  /* border: 3px solid red; */
+}
+
+.project-list-header {
+  font-size: 0.8rem;
+  margin-bottom: 10px;
+}
+
+.project-list {
+  /* background-color: pink; */
+  display: flex;
+  flex-direction: column;
+}
+
+.project-list-item,
+.add-list-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid black;
+  padding: 10px;
+}
+
+.add-list-button:last-child {
+  border: none;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+.add-list-button {
+  font-size: 1rem;
+  font-family: var(--main-font-family);
+  color: var(--text-color-new-list-button);
+  background-color: var(--primary-background-color);
+}
+
+.add-list-button:hover {
+  cursor: pointer;
+}
