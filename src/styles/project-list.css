@@ -1,6 +1,6 @@
 #project-list-section {
   padding: 20px;
-  /* border: 3px solid red; */
+  background-color: var(--primary-background-color);
 }
 
 .project-list-header {
@@ -38,4 +38,70 @@
 
 .add-list-button:hover {
   cursor: pointer;
+}
+
+.burger-menu-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--primary-color); /* Change color as needed */
+  color: black;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 3; /* Ensure the button stays on top */
+}
+
+.burger-menu-button {
+  display: block; /* Initially show the button */
+}
+
+.show-menu .burger-menu-button {
+  display: none; /* Hide the button when the menu is shown */
+}
+
+.menu-container {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 0;
+  background-color: white;
+  overflow: hidden;
+  z-index: 2; /* Ensure the menu stays on top */
+  transition: height 0.5s ease; /* Smooth transition for menu height change */
+}
+
+.show-menu {
+  height: auto; /* Set menu height to cover the screen except for the burger button */
+}
+
+.project-menu-item,
+.add-project-menu-item {
+  padding: 10px;
+  border-bottom: 1px solid #e0e0e0; /* Change color as needed */
+  cursor: pointer;
+}
+
+.project-menu-item:last-child,
+.add-project-menu-item:last-child {
+  border-bottom: none;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+  z-index: 1; /* Ensure it's above other content */
+  display: none; /* Initially hidden */
+}
+
+.show-modal {
+  display: block; /* Show modal when menu is displayed */
 }

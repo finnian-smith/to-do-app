@@ -73,4 +73,19 @@ function addEventHandlers(app) {
   });
 }
 
+document.addEventListener("click", function (event) {
+  const menuContainer = document.querySelector(".menu-container");
+  const burgerMenuButton = document.querySelector(".burger-menu-button");
+  const modalCover = document.querySelector(".modal");
+
+  if (
+    !menuContainer.contains(event.target) &&
+    !burgerMenuButton.contains(event.target)
+  ) {
+    menuContainer.classList.remove("show-menu"); // Close the menu
+    burgerMenuButton.style.display = "block";
+    modalCover.classList.remove("modal"); // also need to remove when project clicked
+  }
+});
+
 export { renderProject }; // add in "addEventHandlers" here
