@@ -19,14 +19,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-top: 1px solid black;
+  border-top: 1px solid var(--horizontal-line-break-color);
   padding: 10px;
 }
 
 .add-list-button:last-child {
   border: none;
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
+  border-top: 1px solid var(--horizontal-line-break-color);
+  border-bottom: 1px solid var(--horizontal-line-break-color);
 }
 
 .add-list-button {
@@ -41,6 +41,7 @@
 }
 
 .burger-menu-button {
+  display: block;
   position: fixed;
   bottom: 20px;
   right: 20px;
@@ -48,15 +49,11 @@
   height: 50px;
   border: none;
   border-radius: 50%;
-  background-color: var(--primary-color); /* Change color as needed */
+  background-color: var(--primary-background-color);
   color: black;
   font-size: 1.5rem;
   cursor: pointer;
   z-index: 3; /* Ensure the button stays on top */
-}
-
-.burger-menu-button {
-  display: block; /* Initially show the button */
 }
 
 .show-menu .burger-menu-button {
@@ -65,6 +62,7 @@
 
 .menu-container {
   position: fixed;
+  padding-top: 40px;
   bottom: 0;
   right: 0;
   width: 100%;
@@ -73,22 +71,12 @@
   overflow: hidden;
   z-index: 2; /* Ensure the menu stays on top */
   transition: height 0.5s ease; /* Smooth transition for menu height change */
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 }
 
 .show-menu {
   height: auto; /* Set menu height to cover the screen except for the burger button */
-}
-
-.project-menu-item,
-.add-project-menu-item {
-  padding: 10px;
-  border-bottom: 1px solid #e0e0e0; /* Change color as needed */
-  cursor: pointer;
-}
-
-.project-menu-item:last-child,
-.add-project-menu-item:last-child {
-  border-bottom: none;
 }
 
 .modal {
@@ -104,4 +92,21 @@
 
 .show-modal {
   display: block; /* Show modal when menu is displayed */
+}
+
+@media screen and (min-width: 768px) {
+  .burger-menu-button {
+    display: none; /* Hide the burger menu button for larger screens */
+  }
+
+  .project-list-item,
+  .add-list-button {
+    border: none;
+  }
+
+  .add-list-button:last-child {
+    background-color: var(--secondary-background-color);
+    border: none;
+    border-radius: 20px;
+  }
 }

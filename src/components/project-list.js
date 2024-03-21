@@ -5,20 +5,44 @@ class ProjectList {
   constructor(projects, container) {
     this.projects = projects;
     this.container = container;
+    this.isMobile = window.innerWidth < 768;
+    this.render();
+    window.addEventListener("resize", this.handleResize.bind(this));
+  }
+
+  handleResize() {
+    const newIsMobile = window.innerWidth < 768;
+    if (newIsMobile !== this.isMobile) {
+      this.isMobile = newIsMobile;
+      this.render();
+    }
   }
 
   render() {
     this.container.textContent = "";
 
-    const projectListElement = this.createProjectList();
+    const screenWidth = window.innerWidth;
+
+    if (screenWidth < 768) {
+      this.renderForMobile();
+    } else {
+      this.renderForDesktop();
+    }
+  }
+
+  renderForMobile() {
     const burgerMenuButton = this.createBurgerMenuButton();
     const menuContainer = this.createMenuContainer();
-
     this.container.appendChild(burgerMenuButton);
     this.container.appendChild(menuContainer);
+  }
+
+  renderForDesktop() {
+    const projectListElement = this.createProjectList();
     this.container.appendChild(projectListElement);
   }
 
+  // creates the project list by appending project items to list
   createProjectList() {
     const projectListElement = document.createElement("div");
     projectListElement.classList.add("project-list");
@@ -28,9 +52,13 @@ class ProjectList {
       projectListElement.appendChild(projectItem);
     });
 
+    const addProjectItem = this.createAddProjectMenuItem();
+    projectListElement.appendChild(addProjectItem);
+
     return projectListElement;
   }
 
+  // creates the project list items
   createProjectItem(project) {
     const projectItem = document.createElement("div");
     projectItem.classList.add("project-list-item");
@@ -46,9 +74,15 @@ class ProjectList {
     numTodosElement.textContent = numTodos;
     projectItem.appendChild(numTodosElement);
 
+    projectItem.addEventListener("click", () => {
+      console.log(`Clicked on project: ${project.title}`);
+      this.toggleMenu();
+    });
+
     return projectItem;
   }
 
+  // creates the burger menu button
   createBurgerMenuButton() {
     const burgerMenuButton = document.createElement("button");
     burgerMenuButton.textContent = "☰";
@@ -58,12 +92,13 @@ class ProjectList {
     return burgerMenuButton;
   }
 
+  // creates the burger menu container
   createMenuContainer() {
     const menuContainer = document.createElement("div");
     menuContainer.classList.add("menu-container");
 
     this.projects.forEach((project) => {
-      const projectItem = this.createProjectMenuItem(project);
+      const projectItem = this.createProjectItem(project);
       menuContainer.appendChild(projectItem);
     });
 
@@ -73,21 +108,10 @@ class ProjectList {
     return menuContainer;
   }
 
-  createProjectMenuItem(project) {
-    const projectItem = document.createElement("div");
-    projectItem.classList.add("project-menu-item");
-    projectItem.textContent = project.title;
-    projectItem.addEventListener("click", () => {
-      console.log(`Clicked on project: ${project.title}`);
-      this.toggleMenu();
-    });
-
-    return projectItem;
-  }
-
+  // creates the item to allow users to add a new project
   createAddProjectMenuItem() {
     const addProjectItem = document.createElement("div");
-    addProjectItem.classList.add("add-project-menu-item");
+    addProjectItem.classList.add("add-list-button");
     addProjectItem.textContent = "Add Project";
     addProjectItem.addEventListener("click", () => {
       console.log("Clicked on Add Project");

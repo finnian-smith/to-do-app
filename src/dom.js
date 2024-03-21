@@ -78,13 +78,10 @@ document.addEventListener("click", function (event) {
   const burgerMenuButton = document.querySelector(".burger-menu-button");
   const modalCover = document.querySelector(".modal");
 
-  if (
-    !menuContainer.contains(event.target) &&
-    !burgerMenuButton.contains(event.target)
-  ) {
-    menuContainer.classList.remove("show-menu"); // Close the menu
+  if (!burgerMenuButton.contains(event.target)) {
+    menuContainer.classList.remove("show-menu");
     burgerMenuButton.style.display = "block";
-    modalCover.classList.remove("modal"); // also need to remove when project clicked
+    modalCover.classList.remove("modal");
   }
 });
 
