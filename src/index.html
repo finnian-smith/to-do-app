@@ -9,15 +9,24 @@
     <div class="general-container">
       <header class="header-section">
         <div class="header-intro">
-          <div class="header-avatar">S</div>
-          <p class="header-message">Good morning, Sullivan! 👋</p>
+          <!-- <div class="header-avatar">S</div> -->
+          <p class="header-message">Good Morning, Sullivan! 👋</p>
+          <p class="header-date">Today, Wed 6 July 2023</p>
         </div>
-        <div class="header-notification">Bell</div>
+        <div class="header-date-picker">
+          <button id="date-dropdown" class="date-dropdown">Today</button>
+          <input
+            type="date"
+            id="date-picker"
+            class="date-picker"
+            style="display: none"
+          />
+        </div>
       </header>
 
       <div id="project-list-section">
         <p class="project-list-header">Lists</p>
-        <!-- p tag - Not rendered as render = "" -->
+        <!-- p tag - Not rendered as render() -> textContent = "" -->
       </div>
 
       <div id="todo-content"></div>

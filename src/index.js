@@ -6,6 +6,7 @@ import {
   deleteTodoFromProject,
   deleteProject,
 } from "../src/logic/todo-manager.js";
+import { initialiseDatePicker } from "../src/logic/date-picker.js";
 import { renderProject } from "./dom.js";
 
 const project1 = createProject("Shopping List");
@@ -29,3 +30,5 @@ console.log(project2);
 const todoContent = document.querySelector("#todo-content");
 // renderProject(project1, todoContent);
 // renderProject(project2, todoContent);
+
+initialiseDatePicker();
