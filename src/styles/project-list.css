@@ -1,6 +1,6 @@
 #project-list-section {
-  padding: 20px;
-  background-color: var(--primary-background-color);
+  padding: 0;
+  background-color: transparent;
 }
 
 .project-list-header {
@@ -9,9 +9,9 @@
 }
 
 .project-list {
-  /* background-color: pink; */
   display: flex;
   flex-direction: column;
+  display: none;
 }
 
 .project-list-item,
@@ -20,7 +20,7 @@
   justify-content: space-between;
   align-items: center;
   border-top: 1px solid var(--horizontal-line-break-color);
-  padding: 10px;
+  padding: 10px 30px;
 }
 
 .add-list-button:last-child {
@@ -53,30 +53,35 @@
   color: black;
   font-size: 1.5rem;
   cursor: pointer;
-  z-index: 3; /* Ensure the button stays on top */
+  z-index: 3;
 }
 
 .show-menu .burger-menu-button {
-  display: none; /* Hide the button when the menu is shown */
+  display: none;
+}
+
+.hidden {
+  display: none;
 }
 
 .menu-container {
   position: fixed;
-  padding-top: 40px;
   bottom: 0;
   right: 0;
   width: 100%;
   height: 0;
   background-color: white;
   overflow: hidden;
-  z-index: 2; /* Ensure the menu stays on top */
-  transition: height 0.5s ease; /* Smooth transition for menu height change */
+  z-index: 2;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
+  overflow-y: auto;
+  max-height: 60vh;
 }
 
 .show-menu {
-  height: auto; /* Set menu height to cover the screen except for the burger button */
+  height: auto;
+  padding-top: 40px;
 }
 
 .modal {
@@ -85,23 +90,30 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
-  z-index: 1; /* Ensure it's above other content */
-  display: none; /* Initially hidden */
-}
-
-.show-modal {
-  display: block; /* Show modal when menu is displayed */
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
 }
 
 @media screen and (min-width: 768px) {
+  #project-list-section {
+    padding: 20px;
+    background-color: var(--primary-background-color);
+    overflow-y: auto; /* Enable vertical scrolling */
+    max-height: 80vh; /* Set a maximum height for the container */
+  }
+
   .burger-menu-button {
-    display: none; /* Hide the burger menu button for larger screens */
+    display: none;
+  }
+
+  .project-list {
+    display: block;
   }
 
   .project-list-item,
   .add-list-button {
     border: none;
+    padding: 10px 20px;
   }
 
   .add-list-button:last-child {

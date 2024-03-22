@@ -78,10 +78,15 @@ document.addEventListener("click", function (event) {
   const burgerMenuButton = document.querySelector(".burger-menu-button");
   const modalCover = document.querySelector(".modal");
 
-  if (!burgerMenuButton.contains(event.target)) {
+  if (
+    !menuContainer.contains(event.target) &&
+    !burgerMenuButton.contains(event.target)
+  ) {
     menuContainer.classList.remove("show-menu");
-    burgerMenuButton.style.display = "block";
-    modalCover.classList.remove("modal");
+    burgerMenuButton.classList.remove("hidden");
+    if (modalCover) {
+      modalCover.remove();
+    }
   }
 });
 

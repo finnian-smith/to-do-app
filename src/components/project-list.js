@@ -5,39 +5,16 @@ class ProjectList {
   constructor(projects, container) {
     this.projects = projects;
     this.container = container;
-    this.isMobile = window.innerWidth < 768;
-    this.render();
-    window.addEventListener("resize", this.handleResize.bind(this));
-  }
-
-  handleResize() {
-    const newIsMobile = window.innerWidth < 768;
-    if (newIsMobile !== this.isMobile) {
-      this.isMobile = newIsMobile;
-      this.render();
-    }
   }
 
   render() {
     this.container.textContent = "";
 
-    const screenWidth = window.innerWidth;
-
-    if (screenWidth < 768) {
-      this.renderForMobile();
-    } else {
-      this.renderForDesktop();
-    }
-  }
-
-  renderForMobile() {
     const burgerMenuButton = this.createBurgerMenuButton();
     const menuContainer = this.createMenuContainer();
     this.container.appendChild(burgerMenuButton);
     this.container.appendChild(menuContainer);
-  }
 
-  renderForDesktop() {
     const projectListElement = this.createProjectList();
     this.container.appendChild(projectListElement);
   }
@@ -133,19 +110,31 @@ class ProjectList {
 
   toggleMenu() {
     const menuContainer = document.querySelector(".menu-container");
-    menuContainer.classList.toggle("show-menu");
     const burgerMenuButton = document.querySelector(".burger-menu-button");
 
-    const modalCover = document.createElement("div");
-    modalCover.classList.add("modal");
-    this.container.appendChild(modalCover);
+    menuContainer.classList.toggle("show-menu");
+    burgerMenuButton.classList.toggle("hidden");
 
     if (menuContainer.classList.contains("show-menu")) {
-      burgerMenuButton.style.display = "none";
-      modalCover.classList.add("show-modal");
+      this.showModal();
     } else {
-      burgerMenuButton.style.display = "block";
-      modalCover.classList.remove("show-modal");
+      this.hideModal();
+    }
+  }
+
+  showModal() {
+    const modalCover = document.querySelector(".modal");
+    if (!modalCover) {
+      const modalCover = document.createElement("div");
+      modalCover.classList.add("modal");
+      document.body.appendChild(modalCover);
+    }
+  }
+
+  hideModal() {
+    const modalCover = document.querySelector(".modal");
+    if (modalCover) {
+      modalCover.remove();
     }
   }
 }
