@@ -1,78 +1,61 @@
 import ProjectList from "./components/project-list.js";
+import TodoList from "./components/todo-list.js";
+import Todo from "./models/todo.js";
+import Project from "./models/project.js";
+import {
+  createTodo,
+  createProject,
+  addTodoToProject,
+  deleteTodoFromProject,
+  deleteProject,
+} from "../src/logic/todo-manager.js";
 
-// project list
-const projects = [
-  {
-    title: "General",
-    todoItems: [
-      ["Buy milk", "2024-03-25", "High", "Shopping"],
-      ["Gym", "2024-03-25", "Medium", "Personal"],
-      ["Gym", "2024-03-27", "Medium", "Personal"],
-    ],
-  },
-  {
-    title: "Shopping",
-    todoItems: [["Buy milk", "2024-03-25", "High", "Shopping"]],
-  },
-  {
-    title: "Personal",
-    todoItems: [
-      ["Gym", "2024-03-25", "Medium", "Personal"],
-      ["Gym", "2024-03-27", "Medium", "Personal"],
-    ],
-  },
-];
+// projects
+const project1 = createProject("General");
+const project2 = createProject("Shopping");
+const project3 = createProject("Personal");
 
-const container = document.querySelector("#project-list-section");
-const projectList = new ProjectList(projects, container);
-projectList.render();
+const projects = [project1, project2, project3];
 
-// original
-function renderProject(project, container) {
-  const projectElement = document.createElement("div");
-  projectElement.classList.add("project-title");
-  projectElement.textContent = `${project.title}`;
-  container.appendChild(projectElement);
+// todos
+const todo1 = createTodo("Buy milk", "2024-03-25", "High", "Shopping");
+const todo2 = createTodo("Gym", "2024-03-25", "Medium", "Personal");
+const todo3 = createTodo("Buy protein", "2024-03-26", "High", "Shopping");
+const todo4 = createTodo("Gym", "2024-03-27", "Medium", "Personal");
+const todo5 = createTodo("Buy pants", "2024-03-29", "Medium", "Shopping");
+const todo6 = createTodo("Gym", "2024-04-01", "Medium", "Personal");
 
-  project.todoItems.forEach((todo) => {
-    const todoElement = createTodoElement(todo);
-    projectElement.appendChild(todoElement);
-  });
-}
+const todos = [todo1, todo2, todo3, todo4, todo5, todo6];
 
-function createTodoElement(todo) {
-  const todoElement = document.createElement("div");
-  todoElement.classList.add("todo");
-  todoElement.innerHTML = `
-      <h3>${todo.title}</h3>
-      <p>Due Date: ${todo.dueDate}</p>
-      <p>Priority: ${todo.priority}</p>
-      <p>Tag: ${todo.tag}</p>
-    `;
-  return todoElement;
-}
-
-// maybe below is a good approach
-function addEventHandlers(app) {
-  app.addEventListener("click", function (event) {
-    const target = event.target;
-
-    // Check if the clicked element is a delete button for a todo item
-    if (target.classList.contains("delete-todo")) {
-      const todoElement = target.closest(".todo");
-      const todoId = todoElement.dataset.todoId; // Assuming each todo item has a unique ID
-      // Find and delete the corresponding todo item from the project
-      // Delete the todo item from the DOM
-    }
-
-    // Check if the clicked element is a delete button for a project
-    if (target.classList.contains("delete-project")) {
-      // Find and delete the corresponding project
-      // Delete the project from the DOM
+// dynamically add todos to projects
+projects.forEach((project) => {
+  todos.forEach((todo) => {
+    if (project.title == "General" || project.title == todo.tag) {
+      addTodoToProject(project, todo);
     }
   });
+});
+
+// renders project list
+function renderProjectList() {
+  const projectListContainer = document.querySelector("#project-list-section");
+  const projectList = new ProjectList(projects, projectListContainer);
+  projectList.render();
 }
 
+// renders todo list
+function renderTodoList() {
+  const todoListContainer = document.querySelector("#todo-list-section");
+  const todoList = new TodoList(todos, todoListContainer);
+  todoList.render();
+}
+
+// for testing and can be removed
+console.log(project1);
+console.log(project2);
+console.log(project3);
+
+// remove modal
 document.addEventListener("click", function (event) {
   const menuContainer = document.querySelector(".menu-container");
   const burgerMenuButton = document.querySelector(".burger-menu-button");
@@ -90,4 +73,4 @@ document.addEventListener("click", function (event) {
   }
 });
 
-export { renderProject }; // add in "addEventHandlers" here
+export { renderProjectList, renderTodoList }; // add in "addEventHandlers" here
