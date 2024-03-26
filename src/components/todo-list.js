@@ -22,7 +22,6 @@ class TodoList {
     dates.forEach((date) => {
       const displayDate = this.getDisplayDate(date);
       const dateElement = this.createDateElement(displayDate);
-      dateElement.classList.add("date-header");
       dateElement.setAttribute("date", date);
       this.container.appendChild(dateElement);
     });
@@ -53,7 +52,14 @@ class TodoList {
   // create data element for dom tree
   createDateElement(displayDate) {
     const dateElement = document.createElement("div");
-    dateElement.textContent = displayDate;
+    dateElement.classList.add("date-header");
+
+    const dateText = document.createElement("p");
+    dateText.classList.add("date-header-text");
+    dateText.textContent = displayDate;
+
+    dateElement.appendChild(dateText);
+
     return dateElement;
   }
 
@@ -74,31 +80,67 @@ class TodoList {
     const todoElement = document.createElement("div");
     todoElement.classList.add("todo-item");
 
-    const todoCheckbox = document.createElement("div");
+    const todoItemLeft = document.createElement("div");
+    todoItemLeft.classList.add("todo-item-left");
+    const todoItemRight = document.createElement("div");
+    todoItemRight.classList.add("todo-item-right");
+
+    const todoCheckbox = document.createElement("input");
+    todoCheckbox.type = "checkbox";
     todoCheckbox.classList.add("todo-checkbox");
-    todoCheckbox.textContent = todo.completed;
-    todoElement.appendChild(todoCheckbox);
-    // figure out logic for displaying checkbox here
+    todoCheckbox.checked = todo.completed;
+    todoCheckbox.addEventListener("change", () => {
+      todo.completed = todoCheckbox.checked;
+      if (todo.completed) {
+        todo.markAsComplete();
+      } else {
+        todo.markAsIncomplete();
+      }
+    });
+
+    todoItemLeft.appendChild(todoCheckbox);
 
     const todoTitle = document.createElement("p");
     todoTitle.classList.add("todo-title");
     todoTitle.textContent = todo.title;
-    todoElement.appendChild(todoTitle);
+    todoItemLeft.appendChild(todoTitle);
+
+    todoElement.appendChild(todoItemLeft);
 
     const todoPriority = document.createElement("p");
     todoPriority.classList.add("todo-priority");
     todoPriority.textContent = todo.priority;
-    todoElement.appendChild(todoPriority);
+    this.setPriorityClass(todo, todoPriority);
+    todoItemRight.appendChild(todoPriority);
 
-    const todoTag = document.createElement("div");
+    const todoTag = document.createElement("p");
     todoTag.classList.add("todo-tag");
     todoTag.textContent = todo.tag;
-    todoElement.appendChild(todoTag);
+    todoItemRight.appendChild(todoTag);
+
+    todoElement.appendChild(todoItemRight);
 
     return todoElement;
   }
 
   // function that filters todo items by project / tag
+
+  // function that sets priority colour
+  setPriorityClass(todo, todoPriority) {
+    switch (todo.priority) {
+      case "Low":
+        todoPriority.classList.add("priority-low");
+        break;
+      case "Medium":
+        todoPriority.classList.add("priority-medium");
+        break;
+      case "High":
+        todoPriority.classList.add("priority-high");
+        break;
+      default:
+        break;
+    }
+  }
 }
 
 export default TodoList;

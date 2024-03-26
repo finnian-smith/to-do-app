@@ -17,7 +17,9 @@
   --primary-background-color: #ffffff;
   --secondary-background-color: #f5f5f5;
   --primary-text-color: #000000;
+  --secondary-text-color: #a09d9d;
   --horizontal-line-break-color: #dedada;
+  --checkbox-background-color: #dedada;
   --text-color-new-list-button: green;
 }
 
@@ -33,7 +35,8 @@ html {
   gap: 20px;
   background-color: var(--secondary-background-color);
   border: 1px solid black; /* visualisation purposes - remove later */
-  padding: 20px;
+  /* padding: 20px; /* COMMENTING THIS OUT FOR TESTING PURPOSES */
+  padding: 20px 0;
 }
 
 .header-section {

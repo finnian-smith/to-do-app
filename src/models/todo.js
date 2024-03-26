@@ -11,6 +11,10 @@ class Todo {
     this.completed = true;
   }
 
+  markAsIncomplete() {
+    this.completed = false;
+  }
+
   updateDetails({ title, dueDate, priority, tag }) {
     if (title !== undefined) this.title = title;
     if (dueDate !== undefined) this.dueDate = dueDate;
