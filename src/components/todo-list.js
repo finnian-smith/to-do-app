@@ -12,6 +12,7 @@ class TodoList {
     this.container.textContent = "";
 
     this.createDateHeaders();
+    this.appendTodoByDate();
   }
 
   // function to create date headers
@@ -21,6 +22,8 @@ class TodoList {
     dates.forEach((date) => {
       const displayDate = this.getDisplayDate(date);
       const dateElement = this.createDateElement(displayDate);
+      dateElement.classList.add("date-header");
+      dateElement.setAttribute("date", date);
       this.container.appendChild(dateElement);
     });
   }
@@ -55,8 +58,45 @@ class TodoList {
   }
 
   // function to append each todo item to the correct date
+  appendTodoByDate() {
+    this.todos.forEach((todo) => {
+      const todoDate = todo.dueDate;
+      const dateHeader = this.container.querySelector(`[date="${todoDate}"]`);
+      if (dateHeader) {
+        const todoElement = this.createTodoElement(todo);
+        dateHeader.appendChild(todoElement);
+      }
+    });
+  }
 
   // function to create each todo item
+  createTodoElement(todo) {
+    const todoElement = document.createElement("div");
+    todoElement.classList.add("todo-item");
+
+    const todoCheckbox = document.createElement("div");
+    todoCheckbox.classList.add("todo-checkbox");
+    todoCheckbox.textContent = todo.completed;
+    todoElement.appendChild(todoCheckbox);
+    // figure out logic for displaying checkbox here
+
+    const todoTitle = document.createElement("p");
+    todoTitle.classList.add("todo-title");
+    todoTitle.textContent = todo.title;
+    todoElement.appendChild(todoTitle);
+
+    const todoPriority = document.createElement("p");
+    todoPriority.classList.add("todo-priority");
+    todoPriority.textContent = todo.priority;
+    todoElement.appendChild(todoPriority);
+
+    const todoTag = document.createElement("div");
+    todoTag.classList.add("todo-tag");
+    todoTag.textContent = todo.tag;
+    todoElement.appendChild(todoTag);
+
+    return todoElement;
+  }
 
   // function that filters todo items by project / tag
 }

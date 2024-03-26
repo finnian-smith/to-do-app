@@ -1,3 +1,9 @@
 #todo-list-section {
   background-color: pink;
 }
+
+.todo-item {
+  display: flex;
+  border: 3px solid black;
+  margin: 5px 0;
+}
