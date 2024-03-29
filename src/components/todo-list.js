@@ -15,10 +15,14 @@ class TodoList {
     this.appendTodoByDate();
   }
 
-  // function to create date headers
+  // create date headers
   createDateHeaders() {
     const dates = this.getUniqueDates();
+    this.createDateHeadersFromDates(dates);
+  }
 
+  // create date headers from an array of dates
+  createDateHeadersFromDates(dates) {
     dates.forEach((date) => {
       const displayDate = this.getDisplayDate(date);
       const dateElement = this.createDateElement(displayDate);
@@ -63,7 +67,7 @@ class TodoList {
     return dateElement;
   }
 
-  // function to append each todo item to the correct date
+  // append todo item to the correct date
   appendTodoByDate() {
     this.todos.forEach((todo) => {
       const todoDate = todo.dueDate;
@@ -75,7 +79,7 @@ class TodoList {
     });
   }
 
-  // function to create each todo item
+  // create todo item
   createTodoElement(todo) {
     const todoElement = document.createElement("div");
     todoElement.classList.add("todo-item");
@@ -123,9 +127,29 @@ class TodoList {
     return todoElement;
   }
 
-  // function that filters todo items by project / tag
+  // filter todo items by project / tag
+  filterTodoItems(project = "General") {
+    this.container.textContent = "";
 
-  // function that sets priority colour
+    const filteredTodos = this.todos.filter((todo) => {
+      return project === "General" || project === todo.tag;
+    });
+
+    const uniqueDates = new Set(filteredTodos.map((todo) => todo.dueDate));
+    this.createDateHeadersFromDates(uniqueDates);
+
+    filteredTodos.forEach((todo) => {
+      const todoElement = this.createTodoElement(todo);
+      const dateHeader = this.container.querySelector(
+        `[date="${todo.dueDate}"]`
+      );
+      if (dateHeader) {
+        dateHeader.appendChild(todoElement);
+      }
+    });
+  }
+
+  // set priority colour
   setPriorityClass(todo, todoPriority) {
     switch (todo.priority) {
       case "Low":

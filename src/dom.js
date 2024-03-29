@@ -48,12 +48,25 @@ function renderTodoList() {
   const todoListContainer = document.querySelector("#todo-list-section");
   const todoList = new TodoList(todos, todoListContainer);
   todoList.render();
+  addProjectItemClickListeners(todoList);
 }
 
-// for testing and can be removed
-console.log(project1);
-console.log(project2);
-console.log(project3);
+// Event listener registration function
+function addProjectItemClickListeners(todoList) {
+  // issue here? when new project is added - it's not picked up?
+  const projectItems = document.querySelectorAll(".project-list-item");
+
+  // filter todo items by project
+  projectItems.forEach((projectItem) => {
+    const projectTitle = projectItem.querySelector(
+      ".project-item-title"
+    ).textContent;
+    projectItem.addEventListener("click", () => {
+      const selectedProject = projectTitle;
+      todoList.filterTodoItems(selectedProject); // Filter todo items based on the selected project
+    });
+  });
+}
 
 // remove modal
 document.addEventListener("click", function (event) {
