@@ -36,14 +36,14 @@ projects.forEach((project) => {
   });
 });
 
-// renders project list
+// render project list
 function renderProjectList() {
   const projectListContainer = document.querySelector("#project-list-section");
   const projectList = new ProjectList(projects, projectListContainer);
   projectList.render();
 }
 
-// renders todo list
+// render todo list
 function renderTodoList() {
   const todoListContainer = document.querySelector("#todo-list-section");
   const todoList = new TodoList(todos, todoListContainer);
@@ -51,20 +51,18 @@ function renderTodoList() {
   addProjectItemClickListeners(todoList);
 }
 
-// Event listener registration function
+// event listener registration function
 function addProjectItemClickListeners(todoList) {
-  // issue here? when new project is added - it's not picked up?
-  const projectItems = document.querySelectorAll(".project-list-item");
+  const projectListContainer = document.querySelector("#project-list-section");
 
-  // filter todo items by project
-  projectItems.forEach((projectItem) => {
-    const projectTitle = projectItem.querySelector(
-      ".project-item-title"
-    ).textContent;
-    projectItem.addEventListener("click", () => {
-      const selectedProject = projectTitle;
-      todoList.filterTodoItems(selectedProject); // Filter todo items based on the selected project
-    });
+  projectListContainer.addEventListener("click", (event) => {
+    const projectItem = event.target.closest(".project-list-item");
+    if (projectItem) {
+      const projectTitle = projectItem.querySelector(
+        ".project-item-title"
+      ).textContent;
+      todoList.filterTodoItems(projectTitle);
+    }
   });
 }
 
