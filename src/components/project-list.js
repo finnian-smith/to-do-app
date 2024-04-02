@@ -52,7 +52,6 @@ class ProjectList {
     projectItem.appendChild(numTodosElement);
 
     projectItem.addEventListener("click", () => {
-      console.log(`Clicked on project: ${project.title}`);
       this.toggleMenu();
     });
 
@@ -91,21 +90,84 @@ class ProjectList {
     addProjectItem.classList.add("add-list-button");
     addProjectItem.textContent = "Add Project";
     addProjectItem.addEventListener("click", () => {
-      console.log("Clicked on Add Project");
-      this.handleAddList();
       this.toggleMenu();
+      this.projectFormInput();
     });
 
     return addProjectItem;
   }
 
   handleAddList() {
-    const newListName = prompt("Enter the name of the new list:");
+    // Get the input field from the form
+    const titleInput = document.getElementById("new-list-name");
+
+    // Get the entered project name
+    const newListName = titleInput.value.trim();
+
     if (newListName) {
+      // Check if the project name already exists
+      const existingProject = this.projects.find(
+        (project) => project.title === newListName
+      );
+
+      if (existingProject) {
+        let errorElement = document.querySelector(".error-message");
+        if (!errorElement) {
+          errorElement = document.createElement("p");
+          errorElement.textContent =
+            "A project with the same name already exists. Please enter a unique project name.";
+          errorElement.classList.add("error-message");
+
+          const projectForm = document.querySelector("form");
+          projectForm.appendChild(errorElement);
+        }
+
+        return; // Exit the function without adding the project
+      }
+
+      // Create a new project
       const newProject = new Project(newListName);
       this.projects.push(newProject);
       this.render();
+      this.hideModal();
     }
+  }
+
+  // creates the add project item form
+  projectFormInput() {
+    const projectFormModal = document.createElement("div");
+    projectFormModal.classList.add("modal");
+    projectFormModal.classList.add("form-modal");
+
+    const projectForm = document.createElement("form");
+
+    const titleLabel = document.createElement("label");
+    titleLabel.setAttribute("for", "new-list-name");
+    titleLabel.textContent = "Project Name";
+
+    const titleInput = document.createElement("input");
+    titleInput.setAttribute("type", "text");
+    titleInput.setAttribute("id", "new-list-name");
+
+    const projectFormButton = document.createElement("button");
+    projectFormButton.setAttribute("type", "submit");
+    projectFormButton.textContent = "Add";
+
+    projectForm.appendChild(titleLabel);
+    projectForm.appendChild(titleInput);
+    projectForm.appendChild(projectFormButton);
+
+    // Add event listener for form submission
+    projectForm.addEventListener("submit", (event) => {
+      event.preventDefault(); // Prevent default form submission behavior
+      this.handleAddList(); // Call handleAddList() when the form is submitted
+    });
+
+    projectFormModal.appendChild(projectForm);
+
+    document.body.appendChild(projectFormModal);
+
+    return projectForm;
   }
 
   toggleMenu() {

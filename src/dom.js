@@ -66,15 +66,22 @@ function addProjectItemClickListeners(todoList) {
   });
 }
 
-// remove modal
-document.addEventListener("click", function (event) {
+// toggle menu and modal
+function toggleMenuAndModal() {
   const menuContainer = document.querySelector(".menu-container");
   const burgerMenuButton = document.querySelector(".burger-menu-button");
   const modalCover = document.querySelector(".modal");
+  const formElement = document.querySelector("form");
+
+  let clickedInsideForm = false;
+  if (formElement && formElement.contains(event.target)) {
+    clickedInsideForm = true;
+  }
 
   if (
     !menuContainer.contains(event.target) &&
-    !burgerMenuButton.contains(event.target)
+    !burgerMenuButton.contains(event.target) &&
+    !clickedInsideForm
   ) {
     menuContainer.classList.remove("show-menu");
     burgerMenuButton.classList.remove("hidden");
@@ -82,6 +89,9 @@ document.addEventListener("click", function (event) {
       modalCover.remove();
     }
   }
-});
+}
+
+// event listener for toggling menu and modal
+document.addEventListener("click", toggleMenuAndModal);
 
 export { renderProjectList, renderTodoList }; // add in "addEventHandlers" here
