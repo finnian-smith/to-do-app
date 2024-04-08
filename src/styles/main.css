@@ -18,9 +18,11 @@
   --secondary-background-color: #f5f5f5;
   --primary-text-color: #000000;
   --secondary-text-color: #a09d9d;
+  --theme-accent-color: #125dfb;
+  --add-button-text-color: #ffffff;
   --horizontal-line-break-color: #dedada;
   --checkbox-background-color: #dedada;
-  --text-color-new-list-button: green;
+  --text-color-new-list-button: #00a86b;
 }
 
 html {

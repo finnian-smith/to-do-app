@@ -133,6 +133,25 @@ form button {
   border-radius: 10px;
   border: none;
   margin: 10px 0;
+  transition: all 0.3s ease-in-out;
+}
+
+form button:hover {
+  cursor: pointer;
+  background-color: var(--theme-accent-color);
+  color: var(--add-button-text-color);
+}
+
+@media screen and (min-width: 425px) {
+  form {
+    width: 60%;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  form {
+    width: 50%;
+  }
 }
 
 @media screen and (min-width: 768px) {
@@ -161,5 +180,15 @@ form button {
     background-color: var(--secondary-background-color);
     border: none;
     border-radius: 20px;
+  }
+
+  form {
+    width: 40%;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  form {
+    width: 30%;
   }
 }
