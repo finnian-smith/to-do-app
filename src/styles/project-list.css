@@ -14,6 +14,29 @@
   display: none;
 }
 
+.project-item-color {
+  width: 20px;
+  height: 20px;
+  border-radius: 30%;
+  border: 2px solid;
+  margin-right: 10px;
+}
+
+.project-item-title {
+  flex-grow: 1;
+}
+
+.project-item-num-todos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  background-color: var(--secondary-background-color);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+}
+
 .project-list-item,
 .add-list-button {
   display: flex;
@@ -38,6 +61,16 @@
 
 .add-list-button:hover {
   cursor: pointer;
+}
+
+.plus-symbol {
+  margin-left: 5px;
+  margin-right: 15px;
+}
+
+.add-list-button {
+  justify-content: flex-start;
+  padding: 15px 30px; /* 15px -> account for 30px content height in project-list-item */
 }
 
 .burger-menu-button {
@@ -140,6 +173,29 @@ form button:hover {
   cursor: pointer;
   background-color: var(--theme-accent-color);
   color: var(--add-button-text-color);
+}
+
+input[type="color"] {
+  appearance: none;
+  border: none;
+  width: 30px; /* Adjust the width as needed */
+  height: 30px; /* Adjust the height as needed */
+  border-radius: 30%; /* Make it round */
+  outline: none; /* Remove default focus outline */
+  cursor: pointer;
+}
+
+/* Customize the appearance of the color input */
+input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+input[type="color"]::-webkit-color-swatch {
+  border: none;
+  border-radius: 30%; /* Make it round */
+  /* width: 100%;
+  height: 100%; */
+  padding: 5px;
 }
 
 @media screen and (min-width: 425px) {

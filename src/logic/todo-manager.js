@@ -5,8 +5,8 @@ function createTodo(title, dueDate, priority, tag) {
   return new Todo(title, dueDate, priority, tag);
 }
 
-function createProject(name) {
-  return new Project(name);
+function createProject(name, color) {
+  return new Project(name, color);
 }
 
 function addTodoToProject(project, todo) {

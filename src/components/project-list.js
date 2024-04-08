@@ -40,6 +40,11 @@ class ProjectList {
     const projectItem = document.createElement("div");
     projectItem.classList.add("project-list-item");
 
+    const projectColor = document.createElement("div");
+    projectColor.classList.add("project-item-color");
+    projectColor.style.borderColor = project.projectColor;
+    projectItem.appendChild(projectColor);
+
     const projectTitle = document.createElement("p");
     projectTitle.classList.add("project-item-title");
     projectTitle.textContent = project.title;
@@ -86,9 +91,16 @@ class ProjectList {
 
   // creates the item to allow users to add a new project
   createAddProjectMenuItem() {
-    const addProjectItem = document.createElement("div");
+    const addProjectItem = document.createElement("div"); // should this be button?
     addProjectItem.classList.add("add-list-button");
-    addProjectItem.textContent = "Add Project";
+
+    const plusSymbol = document.createElement("span");
+    plusSymbol.textContent = "+";
+    plusSymbol.classList.add("plus-symbol");
+
+    addProjectItem.appendChild(plusSymbol);
+    addProjectItem.appendChild(document.createTextNode("Add Project"));
+
     addProjectItem.addEventListener("click", () => {
       this.toggleMenu();
       this.projectFormInput();
@@ -98,35 +110,51 @@ class ProjectList {
   }
 
   handleAddList() {
-    // Get the input field from the form
+    // Get the input fields from the form
     const titleInput = document.getElementById("new-list-name");
+    const colorInput = document.getElementById("new-list-color");
 
-    // Get the entered project name
     const newListName = titleInput.value.trim();
+    const newListColor = colorInput.value;
 
     if (newListName) {
-      // Check if the project name already exists
+      // check if the project name already exists
       const existingProject = this.projects.find(
         (project) => project.title === newListName
       );
 
+      // check if the project color already exists
+      const existingColor = this.projects.find(
+        (project) => project.projectColor === newListColor
+      );
+
+      let errorMessage = "";
+
+      // determine error message based on flag above
       if (existingProject) {
+        errorMessage =
+          "A project with the same name already exists. Please enter a unique project name.";
+      } else if (existingColor) {
+        errorMessage =
+          "A project with the same colour tag already exists. Please select a unique colour tag.";
+      }
+
+      if (errorMessage) {
         let errorElement = document.querySelector(".error-message");
         if (!errorElement) {
           errorElement = document.createElement("p");
-          errorElement.textContent =
-            "A project with the same name already exists. Please enter a unique project name.";
+          errorElement.textContent = errorMessage;
           errorElement.classList.add("error-message");
 
           const projectForm = document.querySelector("form");
           projectForm.appendChild(errorElement);
         }
 
-        return; // Exit the function without adding the project
+        return;
       }
 
-      // Create a new project
-      const newProject = new Project(newListName);
+      // create a new project
+      const newProject = new Project(newListName, newListColor);
       this.projects.push(newProject);
       this.render();
       this.hideModal();
@@ -149,12 +177,22 @@ class ProjectList {
     titleInput.setAttribute("type", "text");
     titleInput.setAttribute("id", "new-list-name");
 
+    const colorLabel = document.createElement("label");
+    colorLabel.setAttribute("for", "new-list-color");
+    colorLabel.textContent = "Project Tag Colour";
+
+    const colorInput = document.createElement("input");
+    colorInput.setAttribute("type", "color");
+    colorInput.setAttribute("id", "new-list-color");
+
     const projectFormButton = document.createElement("button");
     projectFormButton.setAttribute("type", "submit");
     projectFormButton.textContent = "Add";
 
     projectForm.appendChild(titleLabel);
     projectForm.appendChild(titleInput);
+    projectForm.appendChild(colorLabel);
+    projectForm.appendChild(colorInput);
     projectForm.appendChild(projectFormButton);
 
     // Add event listener for form submission
@@ -169,6 +207,9 @@ class ProjectList {
 
     return projectForm;
   }
+
+  // function for showing colors for list
+  // this can then be called and appended in the projectFormInput function above
 
   toggleMenu() {
     const menuContainer = document.querySelector(".menu-container");
