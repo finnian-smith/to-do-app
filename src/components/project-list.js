@@ -208,9 +208,6 @@ class ProjectList {
     return projectForm;
   }
 
-  // function for showing colors for list
-  // this can then be called and appended in the projectFormInput function above
-
   toggleMenu() {
     const menuContainer = document.querySelector(".menu-container");
     const burgerMenuButton = document.querySelector(".burger-menu-button");

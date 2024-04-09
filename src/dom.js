@@ -11,8 +11,8 @@ import {
 } from "../src/logic/todo-manager.js";
 
 // projects
-const project1 = createProject("General", "#FF0000");
-const project2 = createProject("Shopping", "#00FF00");
+const project1 = createProject("General", "#000000");
+const project2 = createProject("Shopping", "#ff0000");
 const project3 = createProject("Personal", "#0000FF");
 
 const projects = [project1, project2, project3];

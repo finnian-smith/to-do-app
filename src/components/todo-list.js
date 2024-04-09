@@ -120,6 +120,7 @@ class TodoList {
     const todoTag = document.createElement("p");
     todoTag.classList.add("todo-tag");
     todoTag.textContent = todo.tag;
+    this.setTagColor(todo.tag, todoTag);
     todoItemRight.appendChild(todoTag);
 
     todoElement.appendChild(todoItemRight);
@@ -164,6 +165,25 @@ class TodoList {
       default:
         break;
     }
+  }
+
+  // need to add todo as argument
+  setTagColor(todoTag, todoTagElement) {
+    const projects = document.querySelectorAll(".project-list-item");
+
+    let tagColor = null;
+
+    projects.forEach((project) => {
+      const titleElement = project.querySelector(".project-item-title");
+      const colorElement = project.querySelector(".project-item-color");
+      const title = titleElement.textContent;
+
+      if (title === todoTag) {
+        const computedStyle = window.getComputedStyle(colorElement);
+        tagColor = computedStyle.getPropertyValue("border-color");
+        todoTagElement.style.borderColor = tagColor;
+      }
+    });
   }
 }
 
