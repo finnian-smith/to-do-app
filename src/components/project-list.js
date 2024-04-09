@@ -148,9 +148,17 @@ class ProjectList {
 
           const projectForm = document.querySelector("form");
           projectForm.appendChild(errorElement);
+        } else {
+          errorElement.textContent = errorMessage;
         }
 
         return;
+      }
+
+      // clear any existing error message
+      const errorElement = document.querySelector(".error-message");
+      if (errorElement) {
+        errorElement.remove();
       }
 
       // create a new project

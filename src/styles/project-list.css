@@ -178,24 +178,29 @@ form button:hover {
 input[type="color"] {
   appearance: none;
   border: none;
-  width: 30px; /* Adjust the width as needed */
-  height: 30px; /* Adjust the height as needed */
-  border-radius: 30%; /* Make it round */
-  outline: none; /* Remove default focus outline */
+  width: 30px;
+  height: 30px;
+  border-radius: 30%;
+  outline: none;
   cursor: pointer;
 }
 
-/* Customize the appearance of the color input */
 input[type="color"]::-webkit-color-swatch-wrapper {
   padding: 0;
 }
 
 input[type="color"]::-webkit-color-swatch {
   border: none;
-  border-radius: 30%; /* Make it round */
-  /* width: 100%;
-  height: 100%; */
+  border-radius: 30%;
   padding: 5px;
+}
+
+.error-message {
+  color: var(--error-message-text-color);
+  font-size: 0.8rem;
+  width: 90%;
+  text-align: center;
+  padding-bottom: 10px;
 }
 
 @media screen and (min-width: 425px) {
