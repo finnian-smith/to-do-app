@@ -11,8 +11,15 @@ class ProjectList {
     this.container.textContent = "";
 
     const burgerMenuButton = this.createBurgerMenuButton();
+    const addTodoButton = this.createAddTodoButton();
     const menuContainer = this.createMenuContainer();
-    this.container.appendChild(burgerMenuButton);
+
+    const buttonContainer = this.createButtonContainer(
+      addTodoButton,
+      burgerMenuButton
+    );
+
+    this.container.appendChild(buttonContainer);
     this.container.appendChild(menuContainer);
 
     const projectListElement = this.createProjectList();
@@ -71,6 +78,24 @@ class ProjectList {
     burgerMenuButton.addEventListener("click", this.toggleMenu.bind(this));
 
     return burgerMenuButton;
+  }
+
+  createAddTodoButton() {
+    const addTodoButton = document.createElement("button");
+    addTodoButton.textContent = "+";
+    addTodoButton.classList.add("add-todo-button");
+    addTodoButton.addEventListener("click", this.toggleMenu.bind(this));
+
+    return addTodoButton;
+  }
+
+  createButtonContainer(addTodoButton, burgerMenuButton) {
+    const buttonContainer = document.createElement("div");
+    buttonContainer.classList.add("button-container");
+    buttonContainer.appendChild(addTodoButton);
+    buttonContainer.appendChild(burgerMenuButton);
+
+    return buttonContainer;
   }
 
   // creates the burger menu container
@@ -219,9 +244,13 @@ class ProjectList {
   toggleMenu() {
     const menuContainer = document.querySelector(".menu-container");
     const burgerMenuButton = document.querySelector(".burger-menu-button");
+    const addTodoButton = document.querySelector(".add-todo-button");
+    const buttonContainer = document.querySelector(".button-container");
 
     menuContainer.classList.toggle("show-menu");
     burgerMenuButton.classList.toggle("hidden");
+    addTodoButton.classList.toggle("hidden");
+    buttonContainer.classList.toggle("hidden");
 
     if (menuContainer.classList.contains("show-menu")) {
       this.showModal();

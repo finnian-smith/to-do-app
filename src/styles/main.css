@@ -24,6 +24,7 @@
   --horizontal-line-break-color: #dedada;
   --checkbox-background-color: #dedada;
   --text-color-new-list-button: #00a86b;
+  --add-todo-button-mobile-color: #00a86b;
   --scrollbar-color: #a09d9d;
 }
 
@@ -38,7 +39,7 @@ html {
   grid-template-rows: auto 1fr;
   gap: 20px;
   background-color: var(--secondary-background-color);
-  padding: 20px 0;
+  padding: 20px 0 80px;
 }
 
 .header-section {

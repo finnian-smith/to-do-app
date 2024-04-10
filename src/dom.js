@@ -70,6 +70,8 @@ function addProjectItemClickListeners(todoList) {
 function toggleMenuAndModal() {
   const menuContainer = document.querySelector(".menu-container");
   const burgerMenuButton = document.querySelector(".burger-menu-button");
+  const addTodoButton = document.querySelector(".add-todo-button");
+  const buttonContainer = document.querySelector(".button-container");
   const modalCover = document.querySelector(".modal");
   const formElement = document.querySelector("form");
 
@@ -85,6 +87,8 @@ function toggleMenuAndModal() {
   ) {
     menuContainer.classList.remove("show-menu");
     burgerMenuButton.classList.remove("hidden");
+    addTodoButton.classList.remove("hidden");
+    buttonContainer.classList.remove("hidden");
     if (modalCover) {
       modalCover.remove();
     }
