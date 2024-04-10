@@ -219,8 +219,24 @@ input[type="color"]::-webkit-color-swatch {
   #project-list-section {
     padding: 20px;
     background-color: var(--primary-background-color);
-    overflow-y: auto; /* Enable vertical scrolling */
-    max-height: 80vh; /* Set a maximum height for the container */
+    overflow-y: auto; /* enable vertical scrolling */
+    max-height: 100vh;
+    border-radius: 10px;
+  }
+
+  #project-list-section::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  #project-list-section::-webkit-scrollbar-thumb {
+    -webkit-border-top-right-radius: 10px;
+    -webkit-border-bottom-right-radius: 10px;
+    background: var(--scrollbar-color);
+  }
+
+  #project-list-section::-webkit-scrollbar-track {
+    -webkit-border-top-right-radius: 10px;
+    -webkit-border-bottom-right-radius: 10px;
   }
 
   .burger-menu-button {

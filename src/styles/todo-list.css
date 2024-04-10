@@ -1,13 +1,11 @@
 #todo-list-section {
-  /* padding: 0;
-  background-color: transparent; */
   background-color: var(--primary-background-color);
   padding: 0 20px;
+  height: fit-content;
 }
 
 .date-header {
   border-top: 1px solid var(--horizontal-line-break-color);
-  /* border-bottom: 1px solid var(--horizontal-line-break-color); */
   padding: 20px 0 0;
 }
 
@@ -37,9 +35,7 @@
 }
 
 .todo-item-right {
-  /* border: 3px solid blue; */
   display: flex;
-  /* justify-content: space-around; */
   align-items: center;
   gap: 5px;
 }
@@ -79,4 +75,10 @@ input[type="checkbox"] {
 
 .priority-low {
   color: #008000;
+}
+
+@media screen and (min-width: 768px) {
+  #todo-list-section {
+    border-radius: 10px;
+  }
 }

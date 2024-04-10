@@ -24,6 +24,7 @@
   --horizontal-line-break-color: #dedada;
   --checkbox-background-color: #dedada;
   --text-color-new-list-button: #00a86b;
+  --scrollbar-color: #a09d9d;
 }
 
 html {
@@ -34,11 +35,9 @@ html {
 .general-container {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 1fr;
+  grid-template-rows: auto 1fr;
   gap: 20px;
   background-color: var(--secondary-background-color);
-  border: 1px solid black; /* visualisation purposes - remove later */
-  /* padding: 20px; /* COMMENTING THIS OUT FOR TESTING PURPOSES */
   padding: 20px 0;
 }
 
@@ -89,20 +88,27 @@ html {
 
 @media screen and (min-width: 768px) {
   .general-container {
-    grid-template-columns: 250px 1fr; /* Two columns for larger screens */
-  }
-
-  #project-list-section {
-    grid-column: 1 / 2;
-    grid-row: 1 / -1;
+    grid-template-columns: 250px 1fr;
+    grid-template-rows: 50px min-content;
+    grid-template-areas: "sidebar header" "sidebar main";
+    padding: 20px;
+    min-height: 100vh;
   }
 
   .header-section {
-    grid-column: 2 / -1;
+    grid-area: header;
     display: flex;
     flex-direction: row;
     align-items: flex-start;
     justify-content: space-between;
+  }
+
+  #project-list-section {
+    grid-area: sidebar;
+  }
+
+  #todo-list-section {
+    grid-area: main;
   }
 
   .header-intro {
@@ -114,5 +120,20 @@ html {
     display: flex;
     flex-direction: row-reverse;
     align-items: baseline;
+  }
+}
+
+@media screen and (min-width: 900px) {
+  .general-container {
+    grid-template-columns: 300px 1fr;
+    column-gap: 50px;
+    padding: 30px 50px 20px 30px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .general-container {
+    column-gap: 80px;
+    padding: 30px 80px 20px 30px;
   }
 }
