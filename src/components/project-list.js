@@ -1,9 +1,11 @@
 import "../styles/project-list.css";
 import Project from "../models/project.js";
+import { createProject } from "../logic/todo-manager.js";
 
 class ProjectList {
-  constructor(projects, container) {
+  constructor(projects, todos, container) {
     this.projects = projects;
+    this.todos = todos;
     this.container = container;
   }
 
@@ -22,25 +24,25 @@ class ProjectList {
     this.container.appendChild(buttonContainer);
     this.container.appendChild(menuContainer);
 
-    const projectListElement = this.createProjectList();
-    this.container.appendChild(projectListElement);
+    // const projectListElement = this.createProjectList();
+    // this.container.appendChild(projectListElement);
   }
 
   // creates the project list by appending project items to list
-  createProjectList() {
-    const projectListElement = document.createElement("div");
-    projectListElement.classList.add("project-list");
+  // createProjectList() {
+  //   const projectListElement = document.createElement("div");
+  //   projectListElement.classList.add("project-list");
 
-    this.projects.forEach((project) => {
-      const projectItem = this.createProjectItem(project);
-      projectListElement.appendChild(projectItem);
-    });
+  //   this.projects.forEach((project) => {
+  //     const projectItem = this.createProjectItem(project);
+  //     projectListElement.appendChild(projectItem);
+  //   });
 
-    const addProjectItem = this.createAddProjectMenuItem();
-    projectListElement.appendChild(addProjectItem);
+  //   const addProjectItem = this.createAddProjectMenuItem();
+  //   projectListElement.appendChild(addProjectItem);
 
-    return projectListElement;
-  }
+  //   return projectListElement;
+  // }
 
   // creates the project list items
   createProjectItem(project) {
@@ -187,7 +189,7 @@ class ProjectList {
       }
 
       // create a new project
-      const newProject = new Project(newListName, newListColor);
+      const newProject = new createProject(newListName, newListColor);
       this.projects.push(newProject);
       this.render();
       this.hideModal();
@@ -247,13 +249,19 @@ class ProjectList {
     const addTodoButton = document.querySelector(".add-todo-button");
     const buttonContainer = document.querySelector(".button-container");
 
-    menuContainer.classList.toggle("show-menu");
-    burgerMenuButton.classList.toggle("hidden");
-    addTodoButton.classList.toggle("hidden");
-    buttonContainer.classList.toggle("hidden");
+    // only toggles styles on mobile devices
+    if (window.innerWidth < 768) {
+      menuContainer.classList.toggle("show-menu");
+      burgerMenuButton.classList.toggle("hidden");
+      // testing the removal of add-todo-button
+      // addTodoButton.classList.toggle("hidden");
+      buttonContainer.classList.toggle("hidden");
 
-    if (menuContainer.classList.contains("show-menu")) {
-      this.showModal();
+      if (menuContainer.classList.contains("show-menu")) {
+        this.showModal();
+      } else {
+        this.hideModal();
+      }
     } else {
       this.hideModal();
     }

@@ -39,14 +39,14 @@ projects.forEach((project) => {
 // render project list
 function renderProjectList() {
   const projectListContainer = document.querySelector("#project-list-section");
-  const projectList = new ProjectList(projects, projectListContainer);
+  const projectList = new ProjectList(projects, todos, projectListContainer);
   projectList.render();
 }
 
 // render todo list
 function renderTodoList() {
   const todoListContainer = document.querySelector("#todo-list-section");
-  const todoList = new TodoList(todos, todoListContainer);
+  const todoList = new TodoList(todos, projects, todoListContainer);
   todoList.render();
   addProjectItemClickListeners(todoList);
 }
@@ -66,7 +66,7 @@ function addProjectItemClickListeners(todoList) {
   });
 }
 
-// toggle menu and modal
+// toggle menu and modal (only for clicking outside of the form / menu)
 function toggleMenuAndModal() {
   const menuContainer = document.querySelector(".menu-container");
   const burgerMenuButton = document.querySelector(".burger-menu-button");

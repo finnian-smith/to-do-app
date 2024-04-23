@@ -271,6 +271,25 @@ input[type="color"]::-webkit-color-swatch {
     -webkit-border-bottom-right-radius: 10px;
   }
 
+  .menu-container {
+    position: relative;
+    width: auto;
+    height: auto;
+    /* background-color: white; */
+    overflow: hidden;
+    z-index: 0;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    overflow-y: auto;
+    /* max-height: 60vh; */
+    border: 3px solid red;
+  }
+
+  .show-menu {
+    height: auto;
+    padding-top: 0px;
+  }
+
   /* .burger-menu-button {
     display: none;
   }
@@ -283,6 +302,7 @@ input[type="color"]::-webkit-color-swatch {
     display: none;
   }
 
+  /* project-list can be removed? */
   .project-list {
     display: block;
   }
