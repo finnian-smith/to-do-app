@@ -1,6 +1,8 @@
 import "../styles/project-list.css";
 import Project from "../models/project.js";
 import { createProject } from "../logic/todo-manager.js";
+import ButtonContainer from "./button-container.js";
+import { toggleStyles, hideModal } from "../logic/modal-action";
 
 class ProjectList {
   constructor(projects, todos, container) {
@@ -12,37 +14,11 @@ class ProjectList {
   render() {
     this.container.textContent = "";
 
-    const burgerMenuButton = this.createBurgerMenuButton();
-    const addTodoButton = this.createAddTodoButton();
+    const buttonContainer = new ButtonContainer(this.container);
+
     const menuContainer = this.createMenuContainer();
-
-    const buttonContainer = this.createButtonContainer(
-      addTodoButton,
-      burgerMenuButton
-    );
-
-    this.container.appendChild(buttonContainer);
     this.container.appendChild(menuContainer);
-
-    // const projectListElement = this.createProjectList();
-    // this.container.appendChild(projectListElement);
   }
-
-  // creates the project list by appending project items to list
-  // createProjectList() {
-  //   const projectListElement = document.createElement("div");
-  //   projectListElement.classList.add("project-list");
-
-  //   this.projects.forEach((project) => {
-  //     const projectItem = this.createProjectItem(project);
-  //     projectListElement.appendChild(projectItem);
-  //   });
-
-  //   const addProjectItem = this.createAddProjectMenuItem();
-  //   projectListElement.appendChild(addProjectItem);
-
-  //   return projectListElement;
-  // }
 
   // creates the project list items
   createProjectItem(project) {
@@ -70,34 +46,6 @@ class ProjectList {
     });
 
     return projectItem;
-  }
-
-  // creates the burger menu button
-  createBurgerMenuButton() {
-    const burgerMenuButton = document.createElement("button");
-    burgerMenuButton.textContent = "☰";
-    burgerMenuButton.classList.add("burger-menu-button");
-    burgerMenuButton.addEventListener("click", this.toggleMenu.bind(this));
-
-    return burgerMenuButton;
-  }
-
-  createAddTodoButton() {
-    const addTodoButton = document.createElement("button");
-    addTodoButton.textContent = "+";
-    addTodoButton.classList.add("add-todo-button");
-    addTodoButton.addEventListener("click", this.toggleMenu.bind(this));
-
-    return addTodoButton;
-  }
-
-  createButtonContainer(addTodoButton, burgerMenuButton) {
-    const buttonContainer = document.createElement("div");
-    buttonContainer.classList.add("button-container");
-    buttonContainer.appendChild(addTodoButton);
-    buttonContainer.appendChild(burgerMenuButton);
-
-    return buttonContainer;
   }
 
   // creates the burger menu container
@@ -192,7 +140,7 @@ class ProjectList {
       const newProject = new createProject(newListName, newListColor);
       this.projects.push(newProject);
       this.render();
-      this.hideModal();
+      hideModal();
     }
   }
 
@@ -244,43 +192,7 @@ class ProjectList {
   }
 
   toggleMenu() {
-    const menuContainer = document.querySelector(".menu-container");
-    const burgerMenuButton = document.querySelector(".burger-menu-button");
-    const addTodoButton = document.querySelector(".add-todo-button");
-    const buttonContainer = document.querySelector(".button-container");
-
-    // only toggles styles on mobile devices
-    if (window.innerWidth < 768) {
-      menuContainer.classList.toggle("show-menu");
-      burgerMenuButton.classList.toggle("hidden");
-      // testing the removal of add-todo-button
-      // addTodoButton.classList.toggle("hidden");
-      buttonContainer.classList.toggle("hidden");
-
-      if (menuContainer.classList.contains("show-menu")) {
-        this.showModal();
-      } else {
-        this.hideModal();
-      }
-    } else {
-      this.hideModal();
-    }
-  }
-
-  showModal() {
-    const modalCover = document.querySelector(".modal");
-    if (!modalCover) {
-      const modalCover = document.createElement("div");
-      modalCover.classList.add("modal");
-      document.body.appendChild(modalCover);
-    }
-  }
-
-  hideModal() {
-    const modalCover = document.querySelector(".modal");
-    if (modalCover) {
-      modalCover.remove();
-    }
+    toggleStyles();
   }
 }
 

@@ -2,6 +2,7 @@ import "../styles/todo-list.css";
 import Todo from "../models/todo.js";
 import { createTodo, addTodoToProject } from "../logic/todo-manager.js";
 import { format, isToday, isTomorrow } from "date-fns";
+import { hideModal } from "../logic/modal-action.js";
 
 class TodoList {
   constructor(todos, projects, container) {
@@ -330,7 +331,7 @@ class TodoList {
       }
       // addTodoToProject(project, newTodo);
       this.render();
-      this.hideModal();
+      hideModal();
     }
   }
 
@@ -390,13 +391,6 @@ class TodoList {
         todoTagElement.style.borderColor = tagColor;
       }
     });
-  }
-
-  hideModal() {
-    const modalCover = document.querySelector(".modal");
-    if (modalCover) {
-      modalCover.remove();
-    }
   }
 }
 
