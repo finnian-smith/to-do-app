@@ -65,6 +65,7 @@ input[type="checkbox"] {
   accent-color: black;
 }
 
+/* Priority Color Flags */
 .priority-high {
   color: #ff0000;
 }

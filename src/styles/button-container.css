@@ -7,42 +7,36 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: white;
+  background-color: var(--primary-background-color);
   padding: 20px;
   z-index: 1;
   border-top: 1px solid var(--horizontal-line-break-color);
 }
 
+.add-todo-button,
 .burger-menu-button {
   display: block;
   /* position: fixed; */
   bottom: 20px;
-  right: 20px;
   width: 50px;
   height: 50px;
   border: none;
   border-radius: 50%;
-  background-color: var(--primary-background-color);
-  color: black;
   font-size: 1.5rem;
   cursor: pointer;
   z-index: 3;
 }
 
 .add-todo-button {
-  display: block;
-  /* position: fixed; */
-  bottom: 20px;
   left: 20px;
-  width: 50px;
-  height: 50px;
-  border: none;
-  border-radius: 50%;
   background-color: var(--add-todo-button-mobile-color);
-  color: white;
-  font-size: 1.5rem;
-  cursor: pointer;
-  z-index: 3;
+  color: var(--add-todo-button-mobile-symbol-color);
+}
+
+.burger-menu-button {
+  right: 20px;
+  background-color: var(--primary-background-color);
+  color: var(--burger-menu-button-symbol-color);
 }
 
 .show-menu .burger-menu-button {

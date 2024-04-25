@@ -16,8 +16,6 @@ class TodoList {
 
     this.createDateHeaders();
     this.appendTodoByDate();
-
-    // CALLING HERE TO MAKE IT ATTACH??? IS THERE A BETTER WAY?
     this.attachFormInput();
   }
 
@@ -131,12 +129,12 @@ class TodoList {
 
     todoElement.appendChild(todoItemRight);
 
-    // Update the project count when a new todo is added
+    // update the project count when a new todo is added
     const projectToUpdate = this.projects.find(
       (project) => project.title === todo.tag
     );
     if (projectToUpdate) {
-      // Check if the todo already exists in the project's todoItems
+      // check if the todo already exists in the project's todoItems
       const existingTodoIndex = projectToUpdate.todoItems.findIndex(
         (existingTodo) => existingTodo.title === todo.title
       );
@@ -153,7 +151,7 @@ class TodoList {
     const projectItems = document.querySelectorAll(".project-item-title");
     let totalCount = 0;
 
-    // Update individual project counts and calculate total count
+    // update individual project counts and calculate total count
     projectItems.forEach((item) => {
       const projectTitle = item.textContent;
       const projectToUpdate = this.projects.find(
@@ -170,7 +168,7 @@ class TodoList {
       }
     });
 
-    // Update count for the "General" project
+    // update count for the "General" project
     const generalProjectItem = document.querySelector(".project-item-title");
     if (generalProjectItem && generalProjectItem.textContent === "General") {
       const generalNumTodosElement =
@@ -184,7 +182,7 @@ class TodoList {
     }
   }
 
-  // creates the add project item form
+  // create the add project item form
   todoFormInput() {
     let todoFormModal = document.querySelector(".modal.form-modal");
 
@@ -238,7 +236,10 @@ class TodoList {
       const titleElement = project.querySelector(".project-item-title");
       return titleElement.textContent;
     });
-    projectTitles.forEach((titleText) => {
+    const filteredProjectTitles = projectTitles.filter(
+      (title) => title !== "General"
+    );
+    filteredProjectTitles.forEach((titleText) => {
       const titleOption = document.createElement("option");
       titleOption.value = titleText;
       titleOption.textContent = titleText;
@@ -260,11 +261,10 @@ class TodoList {
     todoForm.appendChild(tagInput);
     todoForm.appendChild(todoFormButton);
 
-    // Add event listener for form submission
+    // add event listener for form submission
     todoForm.addEventListener("submit", (event) => {
-      event.preventDefault(); // Prevent default form submission behavior
+      event.preventDefault(); // prevent default form submission behavior
       this.handleAddTodo();
-      console.log("logging!");
     });
 
     todoFormModal.appendChild(todoForm);
@@ -283,55 +283,50 @@ class TodoList {
     });
   }
 
+  // create to do item and add it to a project
   handleAddTodo() {
-    const titleInput = document.querySelector("#new-todo-name");
-    const dateInput = document.querySelector("#new-todo-date");
-    const priorityInput = document.querySelector("#new-todo-priority");
-    const tagInput = document.querySelector("#new-todo-tag");
+    const titleInput = document.querySelector("#new-todo-name").value.trim();
+    const dateInput = document.querySelector("#new-todo-date").value;
+    const priorityInput = document.querySelector("#new-todo-priority").value;
+    const tagInput = document.querySelector("#new-todo-tag").value;
 
-    const newTodoTitle = titleInput.value.trim();
-    const newTodoDate = dateInput.value;
-    const newTodoPriority = priorityInput.value;
-    const newTodoTag = tagInput.value;
+    const missingFormValues = !(
+      titleInput &&
+      dateInput &&
+      priorityInput &&
+      tagInput
+    );
 
-    console.log(newTodoTitle);
-    console.log(newTodoDate);
-    console.log(newTodoPriority);
-    console.log(newTodoTag);
-
-    if (
-      newTodoTitle === "" ||
-      newTodoDate === "" ||
-      newTodoPriority === "" ||
-      newTodoTag === ""
-    ) {
-      // Display an error message or handle the case where one or more fields are empty
-      console.error(
+    if (missingFormValues) {
+      this.displayTodoFormErrorMessage(
         "One or more fields are empty. Please fill out all fields."
       );
+      return;
+    }
+
+    const newTodo = createTodo(titleInput, dateInput, priorityInput, tagInput);
+    this.todos.push(newTodo);
+
+    const project = this.projects.find((project) => project.title === tagInput);
+    addTodoToProject(project, newTodo);
+
+    this.render();
+    hideModal();
+  }
+
+  // display error message for to do input form
+  displayTodoFormErrorMessage(message) {
+    let errorElement = document.querySelector(".error-message");
+
+    if (!errorElement) {
+      errorElement = document.createElement("p");
+      errorElement.textContent = message;
+      errorElement.classList.add("error-message");
+
+      const todoForm = document.querySelector("form");
+      todoForm.appendChild(errorElement);
     } else {
-      // All fields are filled, proceed with form submission or other actions
-      const newTodo = createTodo(
-        newTodoTitle,
-        newTodoDate,
-        newTodoPriority,
-        newTodoTag
-      );
-      this.todos.push(newTodo);
-      // below doesn't work as we need actual project, not just a string
-      // HOW TO GET PROJECT INFORMATION HERE?
-      const project = this.projects.find(
-        (project) => project.title === newTodoTag
-      );
-      if (project) {
-        addTodoToProject(project, newTodo); // Add the new todo to the project
-        console.log("added");
-      } else {
-        console.log("no bueno!");
-      }
-      // addTodoToProject(project, newTodo);
-      this.render();
-      hideModal();
+      errorElement.textContent = message;
     }
   }
 
@@ -374,7 +369,7 @@ class TodoList {
     }
   }
 
-  // need to add todo as argument
+  // set tag color
   setTagColor(todoTag, todoTagElement) {
     const projects = document.querySelectorAll(".project-list-item");
 
