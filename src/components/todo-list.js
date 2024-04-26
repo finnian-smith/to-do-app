@@ -305,7 +305,16 @@ class TodoList {
     }
 
     const newTodo = createTodo(titleInput, dateInput, priorityInput, tagInput);
-    this.todos.push(newTodo);
+    // Insert the new todo into the sorted array of todos
+    let index = this.todos.findIndex(
+      (todo) => new Date(todo.dueDate) > new Date(newTodo.dueDate)
+    );
+    if (index === -1) {
+      // If no todo is found with a due date greater than the new todo,
+      // insert the new todo at the end of the array
+      index = this.todos.length;
+    }
+    this.todos.splice(index, 0, newTodo);
 
     const project = this.projects.find((project) => project.title === tagInput);
     addTodoToProject(project, newTodo);
