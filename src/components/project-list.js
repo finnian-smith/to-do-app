@@ -14,8 +14,6 @@ class ProjectList {
   render() {
     this.container.textContent = "";
 
-    const buttonContainer = new ButtonContainer(this.container);
-
     const menuContainer = this.createMenuContainer();
     this.container.appendChild(menuContainer);
   }
@@ -42,13 +40,15 @@ class ProjectList {
     projectItem.appendChild(numTodosElement);
 
     projectItem.addEventListener("click", () => {
-      this.toggleMenu();
+      if (window.innerWidth < 768) {
+        this.toggleMenu();
+      }
     });
 
     return projectItem;
   }
 
-  // creates the burger menu container
+  // creates the project list menu container
   createMenuContainer() {
     const menuContainer = document.createElement("div");
     menuContainer.classList.add("menu-container");

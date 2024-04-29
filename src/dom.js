@@ -5,7 +5,11 @@ import {
   deleteTodoFromProject,
   deleteProject,
 } from "../src/logic/todo-manager.js";
-import { renderProjectList, renderTodoList } from "./logic/render.js";
+import {
+  renderProjectList,
+  renderTodoList,
+  renderButtonContainer,
+} from "./logic/render.js";
 import { toggleMenuAndModal } from "./logic/event-handlers.js";
 
 // projects
@@ -37,6 +41,7 @@ projects.forEach((project) => {
 // call rendering functions
 renderProjectList(projects, todos);
 renderTodoList(projects, todos);
+renderButtonContainer();
 
 // event listener for toggling menu and modal
 document.addEventListener("click", toggleMenuAndModal);

@@ -16,7 +16,6 @@
 .add-todo-button,
 .burger-menu-button {
   display: block;
-  /* position: fixed; */
   bottom: 20px;
   width: 50px;
   height: 50px;
@@ -31,6 +30,15 @@
   left: 20px;
   background-color: var(--add-todo-button-mobile-color);
   color: var(--add-todo-button-mobile-symbol-color);
+}
+
+.add-todo-button-symbol,
+.add-todo-button-text {
+  pointer-events: none;
+}
+
+.add-todo-button-text {
+  display: none;
 }
 
 .burger-menu-button {
@@ -48,15 +56,59 @@
 }
 
 @media screen and (min-width: 768px) {
-  /* .burger-menu-button {
-    display: none;
+  #button-container-section {
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .button-container {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: flex-start;
+    padding: 0px;
+    border: none;
+    visibility: hidden;
+    display: flex;
+    justify-content: center;
   }
 
   .add-todo-button {
-    display: none;
-  } */
+    visibility: visible;
+    width: 60%;
+    border-radius: 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 25px;
+  }
 
-  .button-container {
+  .add-todo-button-symbol {
+    display: inline;
+  }
+
+  .add-todo-button-text {
+    display: inline;
+    font-size: 1rem;
+    margin-left: 10px;
+  }
+
+  .burger-menu-button {
     display: none;
+  }
+}
+
+@media screen and (min-width: 900px) {
+  .add-todo-button {
+    width: 50%;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .add-todo-button {
+    width: 40%;
   }
 }

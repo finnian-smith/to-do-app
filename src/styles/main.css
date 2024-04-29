@@ -177,7 +177,7 @@ form button:hover {
   .general-container {
     grid-template-columns: 250px 1fr;
     grid-template-rows: 50px min-content;
-    grid-template-areas: "sidebar header" "sidebar main";
+    grid-template-areas: "sidebar header" "sidebar main" "sidebar button-container";
     padding: 20px;
     min-height: 100vh;
   }
@@ -196,6 +196,10 @@ form button:hover {
 
   #todo-list-section {
     grid-area: main;
+  }
+
+  #button-container-section {
+    grid-area: button-container;
   }
 
   .header-intro {

@@ -1,5 +1,6 @@
 import ProjectList from "../components/project-list.js";
 import TodoList from "../components/todo-list.js";
+import ButtonContainer from "../components/button-container.js";
 import { projectItemFilterListeners } from "./event-handlers.js";
 
 // render project list
@@ -17,4 +18,13 @@ function renderTodoList(projects, todos) {
   projectItemFilterListeners(todoList);
 }
 
-export { renderProjectList, renderTodoList };
+// render button container
+function renderButtonContainer() {
+  const buttonContainerSection = document.querySelector(
+    "#button-container-section"
+  );
+  const buttonContainer = new ButtonContainer(buttonContainerSection);
+  buttonContainer.render();
+}
+
+export { renderProjectList, renderTodoList, renderButtonContainer };

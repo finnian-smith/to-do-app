@@ -6,7 +6,16 @@ class ButtonContainer {
     this.container = container;
     this.addTodoButton = this.createAddTodoButton();
     this.burgerMenuButton = this.createBurgerMenuButton();
-    this.init();
+  }
+
+  render() {
+    this.container.textContent = "";
+
+    const buttonContainer = this.createButtonContainer(
+      this.addTodoButton,
+      this.burgerMenuButton
+    );
+    this.container.appendChild(buttonContainer);
   }
 
   // creates the burger menu button
@@ -14,20 +23,33 @@ class ButtonContainer {
     const burgerMenuButton = document.createElement("button");
     burgerMenuButton.textContent = "☰";
     burgerMenuButton.classList.add("burger-menu-button");
+
     burgerMenuButton.addEventListener("click", this.toggleMenu.bind(this));
 
     return burgerMenuButton;
   }
 
+  // creates the add todo button
   createAddTodoButton() {
     const addTodoButton = document.createElement("button");
-    addTodoButton.textContent = "+";
     addTodoButton.classList.add("add-todo-button");
+
+    const buttonSymbol = document.createElement("span");
+    buttonSymbol.textContent = "+";
+    buttonSymbol.classList.add("add-todo-button-symbol");
+    addTodoButton.appendChild(buttonSymbol);
+
+    const buttonText = document.createElement("span");
+    buttonText.textContent = "Add To-Do";
+    buttonText.classList.add("add-todo-button-text");
+    addTodoButton.appendChild(buttonText);
+
     addTodoButton.addEventListener("click", this.toggleMenu.bind(this));
 
     return addTodoButton;
   }
 
+  // creates the button container
   createButtonContainer(addTodoButton, burgerMenuButton) {
     const buttonContainer = document.createElement("div");
     buttonContainer.classList.add("button-container");
@@ -35,14 +57,6 @@ class ButtonContainer {
     buttonContainer.appendChild(burgerMenuButton);
 
     return buttonContainer;
-  }
-
-  init() {
-    const buttonContainer = this.createButtonContainer(
-      this.addTodoButton,
-      this.burgerMenuButton
-    );
-    this.container.appendChild(buttonContainer);
   }
 
   toggleMenu() {

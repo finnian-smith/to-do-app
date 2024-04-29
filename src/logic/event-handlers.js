@@ -27,18 +27,50 @@ function toggleMenuAndModal() {
     clickedInsideForm = true;
   }
 
-  if (
-    !menuContainer.contains(event.target) &&
-    !burgerMenuButton.contains(event.target) &&
-    !clickedInsideForm
-  ) {
-    menuContainer.classList.remove("show-menu");
-    burgerMenuButton.classList.remove("hidden");
-    addTodoButton.classList.remove("hidden");
-    buttonContainer.classList.remove("hidden");
-    if (modalCover) {
-      modalCover.remove();
+  if (window.innerWidth < 768) {
+    if (
+      !menuContainer.contains(event.target) &&
+      !burgerMenuButton.contains(event.target) &&
+      !clickedInsideForm
+    ) {
+      hideMenuAndModal(
+        menuContainer,
+        burgerMenuButton,
+        addTodoButton,
+        buttonContainer,
+        modalCover
+      );
     }
+  } else {
+    if (
+      (!menuContainer.contains(event.target) ||
+        !burgerMenuButton.contains(event.target)) &&
+      !clickedInsideForm
+    ) {
+      hideMenuAndModal(
+        menuContainer,
+        burgerMenuButton,
+        addTodoButton,
+        buttonContainer,
+        modalCover
+      );
+    }
+  }
+}
+
+function hideMenuAndModal(
+  menuContainer,
+  burgerMenuButton,
+  addTodoButton,
+  buttonContainer,
+  modalCover
+) {
+  menuContainer.classList.remove("show-menu");
+  burgerMenuButton.classList.remove("hidden");
+  addTodoButton.classList.remove("hidden");
+  buttonContainer.classList.remove("hidden");
+  if (modalCover) {
+    modalCover.remove();
   }
 }
 
