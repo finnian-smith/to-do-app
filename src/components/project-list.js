@@ -1,8 +1,11 @@
 import "../styles/project-list.css";
-import Project from "../models/project.js";
-import { createProject } from "../logic/todo-manager.js";
-import ButtonContainer from "./button-container.js";
+import {
+  createProject,
+  updateProject,
+  deleteProject,
+} from "../logic/todo-manager.js";
 import { toggleStyles, hideModal } from "../logic/modal-action";
+import { renderTodoList } from "../logic/render.js";
 
 class ProjectList {
   constructor(projects, todos, container) {
@@ -33,11 +36,24 @@ class ProjectList {
     projectTitle.textContent = project.title;
     projectItem.appendChild(projectTitle);
 
+    const editElement = document.createElement("div");
+    editElement.classList.add("edit-project-item-button");
+    editElement.innerHTML = `<i class="fa-solid fa-ellipsis-vertical"></i>`;
+    projectItem.appendChild(editElement);
+
     const numTodosElement = document.createElement("p");
     numTodosElement.classList.add("project-item-num-todos");
     const numTodos = project.todoItems.length;
     numTodosElement.textContent = numTodos;
     projectItem.appendChild(numTodosElement);
+
+    editElement.addEventListener("click", (event) => {
+      if (window.innerWidth < 768) {
+        this.toggleMenu();
+      }
+      event.stopPropagation();
+      this.editProjectItem(project);
+    });
 
     projectItem.addEventListener("click", () => {
       if (window.innerWidth < 768) {
@@ -48,7 +64,82 @@ class ProjectList {
     return projectItem;
   }
 
-  // creates the project list menu container
+  // edit project item
+  editProjectItem(project) {
+    const editProjectFormModal = document.createElement("div");
+    editProjectFormModal.classList.add("modal");
+    editProjectFormModal.classList.add("form-modal");
+
+    const editProjectForm = document.createElement("form");
+    editProjectForm.classList.add("edit-form");
+
+    // create delete button
+    const deleteElement = document.createElement("div");
+    deleteElement.classList.add("delete-project-item-button");
+    deleteElement.innerHTML = `<i class="fa-regular fa-trash-can"></i>`;
+    editProjectForm.appendChild(deleteElement);
+
+    // create input fields
+    const titleLabel = document.createElement("label");
+    titleLabel.setAttribute("for", "edit-project-name");
+    titleLabel.textContent = "Project Name";
+
+    const titleInput = document.createElement("input");
+    titleInput.setAttribute("type", "text");
+    titleInput.setAttribute("id", "edit-project-name");
+    titleInput.value = project.title;
+
+    const colorLabel = document.createElement("label");
+    colorLabel.setAttribute("for", "edit-project-color");
+    colorLabel.textContent = "Project Tag Colour";
+
+    const colorInput = document.createElement("input");
+    colorInput.setAttribute("type", "color");
+    colorInput.setAttribute("id", "edit-project-color");
+    colorInput.value = project.projectColor;
+
+    // create update button
+    const editProjectFormButton = document.createElement("button");
+    editProjectFormButton.setAttribute("type", "submit");
+    editProjectFormButton.textContent = "Update";
+
+    // append input fields and button to the form
+    editProjectForm.appendChild(titleLabel);
+    editProjectForm.appendChild(titleInput);
+    editProjectForm.appendChild(colorLabel);
+    editProjectForm.appendChild(colorInput);
+    editProjectForm.appendChild(editProjectFormButton);
+
+    // add event listener for form submission
+    editProjectForm.addEventListener("submit", (event) => {
+      event.preventDefault(); // Prevent default form submission behavior
+
+      const newName = titleInput.value.trim();
+      const newColor = colorInput.value;
+
+      updateProject(project, { title: newName, projectColor: newColor });
+
+      this.toggleMenu();
+      this.render();
+      renderTodoList(this.projects, this.todos);
+    });
+
+    // add event listener for delete
+    deleteElement.addEventListener("click", (event) => {
+      event.stopPropagation();
+
+      deleteProject(this.projects, project, this.todos);
+
+      this.toggleMenu();
+      this.render();
+      renderTodoList(this.projects, this.todos);
+    });
+
+    editProjectFormModal.appendChild(editProjectForm);
+    document.body.appendChild(editProjectFormModal);
+  }
+
+  // create the project list menu container
   createMenuContainer() {
     const menuContainer = document.createElement("div");
     menuContainer.classList.add("menu-container");
@@ -64,7 +155,7 @@ class ProjectList {
     return menuContainer;
   }
 
-  // creates the item to allow users to add a new project
+  // create the item to allow users to add a new project
   createAddProjectMenuItem() {
     const addProjectItem = document.createElement("div"); // should this be button?
     addProjectItem.classList.add("add-list-button");
@@ -84,21 +175,19 @@ class ProjectList {
     return addProjectItem;
   }
 
-  handleAddList() {
-    // Get the input fields from the form
-    const titleInput = document.getElementById("new-list-name");
-    const colorInput = document.getElementById("new-list-color");
+  // adds project item to project list
+  handleAddProject() {
+    const titleInput = document.querySelector("#new-list-name");
+    const colorInput = document.querySelector("#new-list-color");
 
     const newListName = titleInput.value.trim();
     const newListColor = colorInput.value;
 
     if (newListName) {
-      // check if the project name already exists
       const existingProject = this.projects.find(
         (project) => project.title === newListName
       );
 
-      // check if the project color already exists
       const existingColor = this.projects.find(
         (project) => project.projectColor === newListColor
       );
@@ -144,7 +233,7 @@ class ProjectList {
     }
   }
 
-  // creates the add project item form
+  // create the add project item form
   projectFormInput() {
     const projectFormModal = document.createElement("div");
     projectFormModal.classList.add("modal");
@@ -178,10 +267,10 @@ class ProjectList {
     projectForm.appendChild(colorInput);
     projectForm.appendChild(projectFormButton);
 
-    // Add event listener for form submission
+    // add event listener for form submission
     projectForm.addEventListener("submit", (event) => {
-      event.preventDefault(); // Prevent default form submission behavior
-      this.handleAddList(); // Call handleAddList() when the form is submitted
+      event.preventDefault(); // prevent default form submission behavior
+      this.handleAddProject();
     });
 
     projectFormModal.appendChild(projectForm);

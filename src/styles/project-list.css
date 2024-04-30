@@ -26,6 +26,17 @@
   flex-grow: 1;
 }
 
+.edit-project-item-button {
+  margin-right: 15px;
+  color: var(--edit-symbol-color);
+  transition: color 0.3s ease-in-out;
+  padding: 0 5px;
+}
+
+.project-list-item:first-child .edit-project-item-button {
+  display: none;
+}
+
 .project-item-num-todos {
   display: flex;
   justify-content: center;
@@ -100,6 +111,18 @@
   color: var(--add-project-button-hover-text-color);
 }
 
+.project-list-item:hover .edit-project-item-button {
+  display: block;
+}
+
+.project-list-item:hover:first-child .edit-project-item-button {
+  display: none;
+}
+
+.edit-project-item-button:hover {
+  color: var(--edit-symbol-hover-color);
+}
+
 .project-list-item:hover .project-item-num-todos {
   background-color: var(--primary-background-color);
 }
@@ -123,6 +146,23 @@ input[type="color"]::-webkit-color-swatch {
   border: none;
   border-radius: 30%;
   padding: 5px;
+}
+
+.delete-project-item-button {
+  color: var(--delete-button-color);
+  transition: color 0.3s ease-in-out;
+  margin: 20px 20px -10px 0;
+  align-self: flex-end;
+  font-size: 1rem;
+}
+
+.delete-project-item-button:hover {
+  cursor: pointer;
+  color: var(--delete-button-hover-color);
+}
+
+.edit-form button {
+  margin: 10px 0 20px;
 }
 
 @media screen and (min-width: 768px) {
@@ -179,5 +219,16 @@ input[type="color"]::-webkit-color-swatch {
     border: none;
     border-radius: 20px;
     height: 40px;
+  }
+
+  .edit-project-item-button {
+    display: none;
+    margin-right: 10px;
+  }
+}
+
+@media screen and (min-width: 900px) {
+  .edit-project-item-button {
+    margin-right: 15px;
   }
 }

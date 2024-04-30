@@ -29,7 +29,11 @@
   --add-todo-button-mobile-color: #00a86b;
   --add-todo-button-mobile-symbol-color: #ffffff;
   --burger-menu-button-symbol-color: #000000;
+  --edit-symbol-color: #000000;
+  --edit-symbol-hover-color: #a09d9d;
   --scrollbar-color: #a09d9d;
+  --delete-button-color: #000000;
+  --delete-button-hover-color: #f44336;
 }
 
 html {
