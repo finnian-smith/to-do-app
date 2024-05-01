@@ -13,6 +13,10 @@
   border-top: none;
 }
 
+.date-header:last-child {
+  padding: 20px 0;
+}
+
 .date-header-text {
   font-size: 0.8rem;
   color: var(--secondary-text-color);
@@ -25,6 +29,10 @@
   align-items: center;
   border-top: 1px solid var(--horizontal-line-break-color);
   padding: 10px 5px;
+}
+
+.date-header:last-child .todo-item:last-child {
+  border-bottom: 1px solid var(--horizontal-line-break-color);
 }
 
 .todo-item-left {
