@@ -14,13 +14,6 @@ class Todo {
   markAsIncomplete() {
     this.completed = false;
   }
-
-  updateDetails({ title, dueDate, priority, tag }) {
-    if (title !== undefined) this.title = title;
-    if (dueDate !== undefined) this.dueDate = dueDate;
-    if (priority !== undefined) this.priority = priority;
-    if (tag !== undefined) this.tag = tag;
-  }
 }
 
 export default Todo;

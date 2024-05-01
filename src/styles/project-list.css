@@ -119,10 +119,6 @@
   display: none;
 }
 
-.edit-project-item-button:hover {
-  color: var(--edit-symbol-hover-color);
-}
-
 .project-list-item:hover .project-item-num-todos {
   background-color: var(--primary-background-color);
 }
@@ -148,21 +144,9 @@ input[type="color"]::-webkit-color-swatch {
   padding: 5px;
 }
 
-.delete-project-item-button {
-  color: var(--delete-button-color);
-  transition: color 0.3s ease-in-out;
-  margin: 20px 20px -10px 0;
-  align-self: flex-end;
-  font-size: 1rem;
-}
-
 .delete-project-item-button:hover {
   cursor: pointer;
   color: var(--delete-button-hover-color);
-}
-
-.edit-form button {
-  margin: 10px 0 20px;
 }
 
 @media screen and (min-width: 768px) {
@@ -219,11 +203,6 @@ input[type="color"]::-webkit-color-swatch {
     border: none;
     border-radius: 20px;
     height: 40px;
-  }
-
-  .edit-project-item-button {
-    display: none;
-    margin-right: 10px;
   }
 }
 

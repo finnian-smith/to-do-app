@@ -1,8 +1,15 @@
 import "../styles/todo-list.css";
 import Todo from "../models/todo.js";
-import { createTodo, addTodoToProject } from "../logic/todo-manager.js";
+import {
+  createTodo,
+  addTodoToProject,
+  updateTodo,
+  deleteTodoItem,
+} from "../logic/todo-manager.js";
 import { format, isToday, isTomorrow } from "date-fns";
 import { hideModal } from "../logic/modal-action.js";
+import { toggleStyles } from "../logic/modal-action.js";
+import { renderTodoList, renderProjectList } from "../logic/render.js";
 
 class TodoList {
   constructor(todos, projects, container) {
@@ -17,6 +24,7 @@ class TodoList {
     this.createDateHeaders();
     this.appendTodoByDate();
     this.attachFormInput();
+    this.updateProjectCount(); // okay here or in edit function?
   }
 
   // create date headers
@@ -115,6 +123,11 @@ class TodoList {
 
     todoElement.appendChild(todoItemLeft);
 
+    const editElement = document.createElement("div");
+    editElement.classList.add("edit-todo-item-button");
+    editElement.innerHTML = `<i class="fa-solid fa-ellipsis-vertical"></i>`;
+    todoItemRight.appendChild(editElement);
+
     const todoPriority = document.createElement("p");
     todoPriority.classList.add("todo-priority");
     todoPriority.textContent = todo.priority;
@@ -128,6 +141,11 @@ class TodoList {
     todoItemRight.appendChild(todoTag);
 
     todoElement.appendChild(todoItemRight);
+
+    editElement.addEventListener("click", (event) => {
+      event.stopPropagation();
+      this.editTodoItem(todo);
+    });
 
     // update the project count when a new todo is added
     const projectToUpdate = this.projects.find(
@@ -145,6 +163,136 @@ class TodoList {
     }
 
     return todoElement;
+  }
+
+  // edit todo item
+  editTodoItem(todo) {
+    const editTodoFormModal = document.createElement("div");
+    editTodoFormModal.classList.add("modal");
+    editTodoFormModal.classList.add("form-modal");
+
+    const editTodoForm = document.createElement("form");
+    editTodoForm.classList.add("edit-form");
+
+    // create delete button
+    const deleteElement = document.createElement("div");
+    deleteElement.classList.add("delete-todo-item-button");
+    deleteElement.innerHTML = `<i class="fa-regular fa-trash-can"></i>`;
+    editTodoForm.appendChild(deleteElement);
+
+    // create input fields
+    const titleLabel = document.createElement("label");
+    titleLabel.setAttribute("for", "edit-todo-name");
+    titleLabel.textContent = "To-Do";
+
+    const titleInput = document.createElement("input");
+    titleInput.setAttribute("type", "text");
+    titleInput.setAttribute("id", "edit-todo-name");
+    titleInput.value = todo.title;
+
+    const dateLabel = document.createElement("label");
+    dateLabel.setAttribute("for", "edit-todo-date");
+    dateLabel.textContent = "Due Date";
+
+    const dateInput = document.createElement("input");
+    dateInput.setAttribute("type", "date");
+    dateInput.setAttribute("id", "edit-todo-date");
+    dateInput.value = todo.dueDate;
+
+    const priorityLabel = document.createElement("label");
+    priorityLabel.setAttribute("for", "edit-todo-priority");
+    priorityLabel.textContent = "Priority";
+
+    const priorityInput = document.createElement("select");
+    const priorities = ["Low", "Medium", "High"];
+    priorities.forEach((priorityText) => {
+      const priorityOption = document.createElement("option");
+      priorityOption.value = priorityText;
+      priorityOption.textContent = priorityText;
+      priorityInput.appendChild(priorityOption);
+    });
+    priorityInput.setAttribute("id", "edit-todo-priority");
+    priorityInput.value = todo.priority;
+
+    const tagLabel = document.createElement("label");
+    tagLabel.setAttribute("for", "edit-todo-tag");
+    tagLabel.textContent = "Tag";
+
+    const tagInput = document.createElement("select");
+    const projects = document.querySelectorAll(".project-list-item");
+    const projectTitles = [...projects].map((project) => {
+      const titleElement = project.querySelector(".project-item-title");
+      return titleElement.textContent;
+    });
+    const filteredProjectTitles = projectTitles.filter(
+      (title) => title !== "General"
+    );
+    filteredProjectTitles.forEach((titleText) => {
+      const titleOption = document.createElement("option");
+      titleOption.value = titleText;
+      titleOption.textContent = titleText;
+      tagInput.appendChild(titleOption);
+    });
+    tagInput.setAttribute("id", "edit-todo-tag");
+    tagInput.value = todo.tag;
+
+    // create update button
+    const editTodoFormButton = document.createElement("button");
+    editTodoFormButton.setAttribute("type", "submit");
+    editTodoFormButton.textContent = "Update";
+
+    // append input fields and button to the form
+    editTodoForm.appendChild(titleLabel);
+    editTodoForm.appendChild(titleInput);
+    editTodoForm.appendChild(dateLabel);
+    editTodoForm.appendChild(dateInput);
+    editTodoForm.appendChild(priorityLabel);
+    editTodoForm.appendChild(priorityInput);
+    editTodoForm.appendChild(tagLabel);
+    editTodoForm.appendChild(tagInput);
+    editTodoForm.appendChild(editTodoFormButton);
+
+    // add event listener for form submission
+    editTodoForm.addEventListener("submit", (event) => {
+      event.preventDefault(); // prevent default form submission behavior
+
+      const newName = titleInput.value.trim();
+      const newDate = dateInput.value;
+      const newPriority = priorityInput.value;
+      const newTag = tagInput.value;
+
+      updateTodo(
+        todo,
+        {
+          title: newName,
+          dueDate: newDate,
+          priority: newPriority,
+          tag: newTag,
+          completed: todo.completed,
+        },
+        this.projects
+      );
+
+      hideModal();
+      this.orderTodoItems(todo);
+      this.render();
+    });
+
+    // add event listener for delete
+    deleteElement.addEventListener("click", (event) => {
+      event.stopPropagation();
+
+      // delete todo
+      deleteTodoItem(todo, this.todos, this.projects);
+
+      console.log(this.todos);
+
+      hideModal();
+      this.render();
+    });
+
+    editTodoFormModal.appendChild(editTodoForm);
+    document.body.appendChild(editTodoFormModal);
   }
 
   updateProjectCount() {
@@ -305,22 +453,40 @@ class TodoList {
     }
 
     const newTodo = createTodo(titleInput, dateInput, priorityInput, tagInput);
-    // Insert the new todo into the sorted array of todos
-    let index = this.todos.findIndex(
-      (todo) => new Date(todo.dueDate) > new Date(newTodo.dueDate)
-    );
-    if (index === -1) {
-      // If no todo is found with a due date greater than the new todo,
-      // insert the new todo at the end of the array
-      index = this.todos.length;
-    }
-    this.todos.splice(index, 0, newTodo);
+    this.orderTodoItems(newTodo);
 
     const project = this.projects.find((project) => project.title === tagInput);
     addTodoToProject(project, newTodo);
 
     this.render();
     hideModal();
+  }
+
+  orderTodoItems(todo) {
+    let index = -1;
+
+    // Find the index of the todo item in the array if it already exists
+    const existingIndex = this.todos.findIndex(
+      (existingTodo) => existingTodo.title === todo.title
+    );
+
+    // If the todo already exists, remove it from its current position
+    if (existingIndex !== -1) {
+      this.todos.splice(existingIndex, 1);
+    }
+
+    // Find the correct position for the todo based on its due date
+    index = this.todos.findIndex(
+      (existingTodo) => new Date(existingTodo.dueDate) > new Date(todo.dueDate)
+    );
+    if (index === -1) {
+      // If no todo is found with a due date greater than the todo,
+      // insert the todo at the end of the array
+      index = this.todos.length;
+    }
+
+    // Insert the todo into the sorted array of todos at the correct position
+    this.todos.splice(index, 0, todo);
   }
 
   // display error message for to do input form

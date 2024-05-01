@@ -40,6 +40,11 @@
   gap: 5px;
 }
 
+.edit-todo-item-button {
+  color: var(--edit-symbol-color);
+  transition: color 0.3s ease-in-out;
+}
+
 .todo-priority,
 .todo-tag {
   width: 75px;
@@ -63,6 +68,12 @@ input[type="checkbox"] {
   width: 1.2rem;
   height: 1.2rem;
   accent-color: black;
+}
+
+/* Hover Styles */
+.todo-item:hover .edit-todo-item-button {
+  display: block;
+  cursor: pointer;
 }
 
 /* Priority Color Flags */
