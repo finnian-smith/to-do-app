@@ -10,6 +10,7 @@ import { format, isToday, isTomorrow } from "date-fns";
 import { hideModal } from "../logic/modal-action.js";
 import { toggleStyles } from "../logic/modal-action.js";
 import { renderTodoList, renderProjectList } from "../logic/render.js";
+import { updateProjectCount } from "../logic/util-functions.js";
 
 class TodoList {
   constructor(todos, projects, container) {
@@ -24,7 +25,7 @@ class TodoList {
     this.createDateHeaders();
     this.appendTodoByDate();
     this.attachFormInput();
-    this.updateProjectCount(); // okay here or in edit function?
+    updateProjectCount(this.projects); // okay here or in edit function?
   }
 
   // create date headers
@@ -159,7 +160,7 @@ class TodoList {
       if (existingTodoIndex === -1) {
         projectToUpdate.todoItems.push(todo);
       }
-      this.updateProjectCount();
+      updateProjectCount(this.projects);
     }
 
     return todoElement;
@@ -293,41 +294,6 @@ class TodoList {
 
     editTodoFormModal.appendChild(editTodoForm);
     document.body.appendChild(editTodoFormModal);
-  }
-
-  updateProjectCount() {
-    const projectItems = document.querySelectorAll(".project-item-title");
-    let totalCount = 0;
-
-    // update individual project counts and calculate total count
-    projectItems.forEach((item) => {
-      const projectTitle = item.textContent;
-      const projectToUpdate = this.projects.find(
-        (project) => project.title === projectTitle
-      );
-
-      const numTodosElement = item.parentElement.querySelector(
-        ".project-item-num-todos"
-      );
-      const projectCount = projectToUpdate.todoItems.length;
-      numTodosElement.textContent = projectCount;
-      if (projectTitle !== "General") {
-        totalCount += projectCount;
-      }
-    });
-
-    // update count for the "General" project
-    const generalProjectItem = document.querySelector(".project-item-title");
-    if (generalProjectItem && generalProjectItem.textContent === "General") {
-      const generalNumTodosElement =
-        generalProjectItem.parentElement.querySelector(
-          ".project-item-num-todos"
-        );
-      if (generalNumTodosElement) {
-        const generalProjectCount = totalCount;
-        generalNumTodosElement.textContent = generalProjectCount;
-      }
-    }
   }
 
   // create the add project item form

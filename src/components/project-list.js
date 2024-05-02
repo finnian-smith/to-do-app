@@ -6,6 +6,7 @@ import {
 } from "../logic/todo-manager.js";
 import { toggleStyles, hideModal } from "../logic/modal-action";
 import { renderTodoList } from "../logic/render.js";
+import { updateProjectCount } from "../logic/util-functions.js";
 
 class ProjectList {
   constructor(projects, todos, container) {
@@ -112,7 +113,7 @@ class ProjectList {
 
     // add event listener for form submission
     editProjectForm.addEventListener("submit", (event) => {
-      event.preventDefault(); // Prevent default form submission behavior
+      event.preventDefault();
 
       const newName = titleInput.value.trim();
       const newColor = colorInput.value;
@@ -229,6 +230,7 @@ class ProjectList {
       const newProject = new createProject(newListName, newListColor);
       this.projects.push(newProject);
       this.render();
+      updateProjectCount(this.projects);
       hideModal();
     }
   }
