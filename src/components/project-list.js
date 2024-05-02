@@ -88,6 +88,7 @@ class ProjectList {
     const titleInput = document.createElement("input");
     titleInput.setAttribute("type", "text");
     titleInput.setAttribute("id", "edit-project-name");
+    titleInput.setAttribute("maxlength", "10");
     titleInput.value = project.title;
 
     const colorLabel = document.createElement("label");
@@ -117,6 +118,11 @@ class ProjectList {
 
       const newName = titleInput.value.trim();
       const newColor = colorInput.value;
+
+      // ignore if no title is entered when updating
+      if (!newName) {
+        return;
+      }
 
       updateProject(project, { title: newName, projectColor: newColor });
 
@@ -158,7 +164,7 @@ class ProjectList {
 
   // create the item to allow users to add a new project
   createAddProjectMenuItem() {
-    const addProjectItem = document.createElement("div"); // should this be button?
+    const addProjectItem = document.createElement("div");
     addProjectItem.classList.add("add-list-button");
 
     const plusSymbol = document.createElement("span");
@@ -176,7 +182,7 @@ class ProjectList {
     return addProjectItem;
   }
 
-  // adds project item to project list
+  // add project item to project list
   handleAddProject() {
     const titleInput = document.querySelector("#new-list-name");
     const colorInput = document.querySelector("#new-list-color");
@@ -250,6 +256,7 @@ class ProjectList {
     const titleInput = document.createElement("input");
     titleInput.setAttribute("type", "text");
     titleInput.setAttribute("id", "new-list-name");
+    titleInput.setAttribute("maxlength", "10");
 
     const colorLabel = document.createElement("label");
     colorLabel.setAttribute("for", "new-list-color");
