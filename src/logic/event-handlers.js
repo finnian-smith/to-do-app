@@ -8,7 +8,21 @@ function projectItemFilterListeners(todoList) {
       const projectTitle = projectItem.querySelector(
         ".project-item-title"
       ).textContent;
-      todoList.filterTodoItems(projectTitle);
+
+      // get selected date
+      const selectedDate = document.querySelector("#date-picker").value;
+
+      if (!selectedDate) {
+        // no date -> filter only on project
+        todoList.filterTodoItems({ type: "project", value: projectTitle });
+      } else {
+        // else -> filter by both project and date
+        todoList.filterTodoItems({
+          type: "project-date",
+          project: projectTitle,
+          date: selectedDate,
+        });
+      }
     }
   });
 }

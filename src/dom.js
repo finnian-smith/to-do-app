@@ -10,6 +10,11 @@ import {
   renderTodoList,
   renderButtonContainer,
 } from "./logic/render.js";
+import TodoList from "./components/todo-list.js";
+import {
+  updateTodaysDate,
+  initialiseDatePicker,
+} from "./logic/date-handlers.js";
 import { toggleMenuAndModal } from "./logic/event-handlers.js";
 
 // projects
@@ -38,10 +43,17 @@ projects.forEach((project) => {
   });
 });
 
+const todoListContainer = document.querySelector("#todo-list-section");
+const todoList = new TodoList(todos, projects, todoListContainer);
+
 // call rendering functions
 renderProjectList(projects, todos);
 renderTodoList(projects, todos);
 renderButtonContainer();
+
+// maybe call initialise date picker and todays date here
+initialiseDatePicker(todoList);
+updateTodaysDate();
 
 // event listener for toggling menu and modal
 document.addEventListener("click", toggleMenuAndModal);

@@ -9,5 +9,5 @@ import "./dom.js";
 // renderProjectList();
 // renderTodoList();
 
-updateTodaysDate();
-initialiseDatePicker();
+// updateTodaysDate();
+// initialiseDatePicker();

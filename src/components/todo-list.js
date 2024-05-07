@@ -471,13 +471,35 @@ class TodoList {
     }
   }
 
-  // filter todo items by project / tag
-  filterTodoItems(project = "General") {
+  // filter todo items by project / tag or date
+  filterTodoItems(filterValue = { type: "project", value: "General" }) {
     this.container.textContent = "";
 
-    const filteredTodos = this.todos.filter((todo) => {
-      return project === "General" || project === todo.tag;
-    });
+    let filteredTodos = [];
+
+    if (filterValue.type === "project") {
+      filteredTodos = this.todos.filter((todo) => {
+        return (
+          filterValue.value === "General" || filterValue.value === todo.tag
+        );
+      });
+    } else if (filterValue.type === "date") {
+      filteredTodos = this.todos.filter((todo) => {
+        return todo.dueDate === filterValue.value;
+      });
+    } else if (filterValue.type === "project-date") {
+      filteredTodos = this.todos.filter((todo) => {
+        return (
+          todo.dueDate === filterValue.date &&
+          (filterValue.project === "General" ||
+            filterValue.project === todo.tag)
+        );
+      });
+    } else {
+      // Handle invalid filter type
+      console.error("Invalid filter type");
+      return;
+    }
 
     const uniqueDates = new Set(filteredTodos.map((todo) => todo.dueDate));
     this.createDateHeadersFromDates(uniqueDates);

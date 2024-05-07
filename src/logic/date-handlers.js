@@ -12,18 +12,30 @@ function updateTodaysDate() {
   headerDate.textContent = formattedDate;
 }
 
-function initialiseDatePicker() {
-  const dateDropdownButton = document.getElementById("date-dropdown");
-  const datePickerInput = document.getElementById("date-picker");
+function initialiseDatePicker(todoList) {
+  const dateDropdownButton = document.querySelector("#date-dropdown");
+  const datePickerInput = document.querySelector("#date-picker");
+  const defaultHomeValue = "Home";
 
   dateDropdownButton.addEventListener("click", () => {
-    datePickerInput.style.display = "block";
+    if (datePickerInput.style.display === "block") {
+      datePickerInput.style.display = "none";
+      datePickerInput.value = "";
+      todoList.filterTodoItems({ type: "project", value: "General" });
+    } else {
+      datePickerInput.style.display = "block";
+    }
+    dateDropdownButton.textContent = defaultHomeValue;
   });
 
   datePickerInput.addEventListener("change", () => {
-    const formattedDate = format(new Date(datePickerInput.value), "dd/MM/yyyy");
+    const selectedDate = datePickerInput.value;
+    const formattedDate = format(new Date(selectedDate), "dd/MM/yyyy");
+    console.log(selectedDate);
     dateDropdownButton.textContent = formattedDate;
     datePickerInput.style.display = "none";
+
+    todoList.filterTodoItems({ type: "date", value: selectedDate });
   });
 }
 

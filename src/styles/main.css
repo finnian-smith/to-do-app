@@ -93,6 +93,7 @@ html {
   font-family: var(--main-font-family);
   font-size: 0.9rem;
   background-color: var(--secondary-background-color);
+  cursor: pointer;
 }
 
 /* Modal */
