@@ -1,5 +1,4 @@
 import "../styles/todo-list.css";
-import Todo from "../models/todo.js";
 import {
   createTodo,
   addTodoToProject,
@@ -8,8 +7,6 @@ import {
 } from "../logic/todo-manager.js";
 import { format, isToday, isTomorrow } from "date-fns";
 import { hideModal } from "../logic/modal-action.js";
-import { toggleStyles } from "../logic/modal-action.js";
-import { renderTodoList, renderProjectList } from "../logic/render.js";
 import { updateProjectCount } from "../logic/util-functions.js";
 
 class TodoList {
@@ -25,7 +22,6 @@ class TodoList {
     this.createDateHeaders();
     this.appendTodoByDate();
     this.attachFormInput();
-    updateProjectCount(this.projects); // okay here or in edit function?
   }
 
   // create date headers
@@ -155,7 +151,7 @@ class TodoList {
     if (projectToUpdate) {
       // check if the todo already exists in the project's todoItems
       const existingTodoIndex = projectToUpdate.todoItems.findIndex(
-        (existingTodo) => existingTodo.title === todo.title
+        (existingTodo) => existingTodo.id === todo.id
       );
       if (existingTodoIndex === -1) {
         projectToUpdate.todoItems.push(todo);
@@ -255,7 +251,7 @@ class TodoList {
 
     // add event listener for form submission
     editTodoForm.addEventListener("submit", (event) => {
-      event.preventDefault(); // prevent default form submission behavior
+      event.preventDefault();
 
       const newName = titleInput.value.trim();
       const newDate = dateInput.value;
@@ -397,7 +393,7 @@ class TodoList {
     });
   }
 
-  // create to do item and add it to a project
+  // create todo item and add it to a project
   handleAddTodo() {
     const titleInput = document.querySelector("#new-todo-name").value.trim();
     const dateInput = document.querySelector("#new-todo-date").value;
@@ -424,6 +420,9 @@ class TodoList {
     const project = this.projects.find((project) => project.title === tagInput);
     addTodoToProject(project, newTodo);
 
+    // check todo items
+    console.log(this.todos);
+
     this.render();
     hideModal();
   }
@@ -431,31 +430,28 @@ class TodoList {
   orderTodoItems(todo) {
     let index = -1;
 
-    // Find the index of the todo item in the array if it already exists
     const existingIndex = this.todos.findIndex(
-      (existingTodo) => existingTodo.title === todo.title
+      (existingTodo) => existingTodo.id === todo.id
     );
 
-    // If the todo already exists, remove it from its current position
+    // if todo already exists -> remove it from its current position
     if (existingIndex !== -1) {
       this.todos.splice(existingIndex, 1);
     }
 
-    // Find the correct position for the todo based on its due date
+    // find correct position for todo based on due date
     index = this.todos.findIndex(
       (existingTodo) => new Date(existingTodo.dueDate) > new Date(todo.dueDate)
     );
     if (index === -1) {
-      // If no todo is found with a due date greater than the todo,
-      // insert the todo at the end of the array
       index = this.todos.length;
     }
 
-    // Insert the todo into the sorted array of todos at the correct position
+    // insert todo into the sorted array of todos at the correct position
     this.todos.splice(index, 0, todo);
   }
 
-  // display error message for to do input form
+  // display error message for todo input form
   displayTodoFormErrorMessage(message) {
     let errorElement = document.querySelector(".error-message");
 
@@ -496,7 +492,7 @@ class TodoList {
         );
       });
     } else {
-      // Handle invalid filter type
+      // handle invalid filter type
       console.error("Invalid filter type");
       return;
     }
