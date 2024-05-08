@@ -101,6 +101,7 @@ class TodoList {
     const todoCheckbox = document.createElement("input");
     todoCheckbox.type = "checkbox";
     todoCheckbox.classList.add("todo-checkbox");
+    todoCheckbox.setAttribute("name", "todo-item-checkbox");
     todoCheckbox.checked = todo.completed;
     todoCheckbox.addEventListener("change", () => {
       todo.completed = todoCheckbox.checked;
