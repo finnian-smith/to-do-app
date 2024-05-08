@@ -1,4 +1,4 @@
-import { format, isToday } from "date-fns";
+import { format, isToday, getHours } from "date-fns";
 
 function updateTodaysDate() {
   const headerDate = document.querySelector(".header-date");
@@ -10,6 +10,27 @@ function updateTodaysDate() {
     : format(currentDate, "EEE dd MMMM yyyy");
 
   headerDate.textContent = formattedDate;
+}
+
+function updateMessageByTime() {
+  const headerMessage = document.querySelector(".header-message");
+
+  const currentDate = new Date();
+  const currentHour = getHours(currentDate);
+
+  let message = "";
+
+  if (currentHour >= 5 && currentHour < 12) {
+    message = "Good Morning";
+  } else if (currentHour >= 12 && currentHour < 18) {
+    message = "Good Afternoon";
+  } else if (currentHour >= 18 && currentHour < 24) {
+    message = "Good Evening";
+  } else {
+    message = "Hello";
+  }
+
+  headerMessage.textContent = `${message}, Sullivan! 👋`;
 }
 
 function initialiseDatePicker(todoList) {
@@ -39,4 +60,4 @@ function initialiseDatePicker(todoList) {
   });
 }
 
-export { updateTodaysDate, initialiseDatePicker };
+export { updateTodaysDate, updateMessageByTime, initialiseDatePicker };

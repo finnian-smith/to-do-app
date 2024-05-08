@@ -14,6 +14,7 @@ import {
 import TodoList from "./components/todo-list.js";
 import {
   updateTodaysDate,
+  updateMessageByTime,
   initialiseDatePicker,
 } from "./logic/date-handlers.js";
 import { toggleMenuAndModal } from "./logic/event-handlers.js";
@@ -53,9 +54,10 @@ renderProjectList(projects, todos);
 renderTodoList(projects, todos);
 renderButtonContainer();
 
-// maybe call initialise date picker and todays date here
+// call time functions
 initialiseDatePicker(todoList);
 updateTodaysDate();
+updateMessageByTime();
 
 // event listener for toggling menu and modal
 document.addEventListener("click", toggleMenuAndModal);

@@ -21,7 +21,6 @@ class HeaderContainer {
 
     const headerMessage = document.createElement("p");
     headerMessage.classList.add("header-message");
-    headerMessage.textContent = "Good Morning, Sullivan! 👋";
 
     const headerDate = document.createElement("p");
     headerDate.classList.add("header-date");
