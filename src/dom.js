@@ -6,6 +6,7 @@ import {
   deleteProject,
 } from "../src/logic/todo-manager.js";
 import {
+  renderHeaderContainer,
   renderProjectList,
   renderTodoList,
   renderButtonContainer,
@@ -47,6 +48,7 @@ const todoListContainer = document.querySelector("#todo-list-section");
 const todoList = new TodoList(todos, projects, todoListContainer);
 
 // call rendering functions
+renderHeaderContainer();
 renderProjectList(projects, todos);
 renderTodoList(projects, todos);
 renderButtonContainer();

@@ -1,7 +1,16 @@
+import HeaderContainer from "../components/header-container.js";
 import ProjectList from "../components/project-list.js";
 import TodoList from "../components/todo-list.js";
 import ButtonContainer from "../components/button-container.js";
 import { projectItemFilterListeners } from "./event-handlers.js";
+
+function renderHeaderContainer() {
+  const headerContainerSection = document.querySelector(
+    "#header-container-section"
+  );
+  const headerContainer = new HeaderContainer(headerContainerSection);
+  headerContainer.render();
+}
 
 // render project list
 function renderProjectList(projects, todos) {
@@ -27,4 +36,9 @@ function renderButtonContainer() {
   buttonContainer.render();
 }
 
-export { renderProjectList, renderTodoList, renderButtonContainer };
+export {
+  renderHeaderContainer,
+  renderProjectList,
+  renderTodoList,
+  renderButtonContainer,
+};
