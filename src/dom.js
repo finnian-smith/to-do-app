@@ -2,8 +2,6 @@ import {
   createTodo,
   createProject,
   addTodoToProject,
-  deleteTodoFromProject,
-  deleteProject,
 } from "../src/logic/todo-manager.js";
 import {
   renderHeaderContainer,
@@ -17,7 +15,6 @@ import {
   updateMessageByTime,
   initialiseDatePicker,
 } from "./logic/date-handlers.js";
-import { toggleMenuAndModal } from "./logic/event-handlers.js";
 
 // projects
 const project1 = createProject("General", "#000000");
@@ -31,7 +28,7 @@ const todo1 = createTodo("Buy milk", "2024-03-25", "Low", "Shopping");
 const todo2 = createTodo("Gym", "2024-03-25", "Medium", "Personal");
 const todo3 = createTodo("Buy protein", "2024-03-26", "High", "Shopping");
 const todo4 = createTodo("Gym", "2024-03-27", "Medium", "Personal");
-const todo5 = createTodo("Buy pants", "2024-03-29", "Low", "Shopping");
+const todo5 = createTodo("Buy tickets", "2024-03-29", "Low", "Shopping");
 const todo6 = createTodo("Gym", "2024-04-01", "Medium", "Personal");
 
 const todos = [todo1, todo2, todo3, todo4, todo5, todo6];
@@ -58,8 +55,5 @@ renderButtonContainer();
 initialiseDatePicker(todoList);
 updateTodaysDate();
 updateMessageByTime();
-
-// event listener for toggling menu and modal
-document.addEventListener("click", toggleMenuAndModal);
 
 export { projects, todos };

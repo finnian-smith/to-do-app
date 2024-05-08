@@ -1,5 +1,5 @@
 import "../styles/button-container.css";
-import { toggleStyles } from "../logic/modal-action";
+import { toggleMenu } from "../logic/modal-action";
 
 class ButtonContainer {
   constructor(container) {
@@ -24,7 +24,7 @@ class ButtonContainer {
     burgerMenuButton.textContent = "☰";
     burgerMenuButton.classList.add("burger-menu-button");
 
-    burgerMenuButton.addEventListener("click", this.toggleMenu.bind(this));
+    burgerMenuButton.addEventListener("click", () => toggleMenu());
 
     return burgerMenuButton;
   }
@@ -44,7 +44,7 @@ class ButtonContainer {
     buttonText.classList.add("add-todo-button-text");
     addTodoButton.appendChild(buttonText);
 
-    addTodoButton.addEventListener("click", this.toggleMenu.bind(this));
+    addTodoButton.addEventListener("click", () => toggleMenu());
 
     return addTodoButton;
   }
@@ -57,10 +57,6 @@ class ButtonContainer {
     buttonContainer.appendChild(burgerMenuButton);
 
     return buttonContainer;
-  }
-
-  toggleMenu() {
-    toggleStyles();
   }
 }
 

@@ -52,7 +52,6 @@ function initialiseDatePicker(todoList) {
   datePickerInput.addEventListener("change", () => {
     const selectedDate = datePickerInput.value;
     const formattedDate = format(new Date(selectedDate), "dd/MM/yyyy");
-    console.log(selectedDate);
     dateDropdownButton.textContent = formattedDate;
     datePickerInput.style.display = "none";
 

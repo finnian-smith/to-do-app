@@ -283,8 +283,6 @@ class TodoList {
       // delete todo
       deleteTodoItem(todo, this.todos, this.projects);
 
-      console.log(this.todos);
-
       hideModal();
       this.render();
     });
@@ -420,9 +418,6 @@ class TodoList {
 
     const project = this.projects.find((project) => project.title === tagInput);
     addTodoToProject(project, newTodo);
-
-    // check todo items
-    console.log(this.todos);
 
     this.render();
     hideModal();

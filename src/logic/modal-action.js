@@ -1,4 +1,4 @@
-function toggleStyles() {
+function toggleMenu() {
   const menuContainer = document.querySelector(".menu-container");
   menuContainer.classList.toggle("show-menu");
 
@@ -26,4 +26,4 @@ function hideModal() {
   }
 }
 
-export { toggleStyles, showModal, hideModal };
+export { toggleMenu, showModal, hideModal };

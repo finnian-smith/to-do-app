@@ -4,7 +4,7 @@ import {
   updateProject,
   deleteProject,
 } from "../logic/todo-manager.js";
-import { toggleStyles, hideModal } from "../logic/modal-action";
+import { toggleMenu, hideModal } from "../logic/modal-action";
 import { renderTodoList } from "../logic/render.js";
 import { updateProjectCount } from "../logic/util-functions.js";
 
@@ -50,7 +50,7 @@ class ProjectList {
 
     editElement.addEventListener("click", (event) => {
       if (window.innerWidth < 768) {
-        this.toggleMenu();
+        toggleMenu();
       }
       event.stopPropagation();
       this.editProjectItem(project);
@@ -58,7 +58,7 @@ class ProjectList {
 
     projectItem.addEventListener("click", () => {
       if (window.innerWidth < 768) {
-        this.toggleMenu();
+        toggleMenu();
       }
     });
 
@@ -74,13 +74,13 @@ class ProjectList {
     const editProjectForm = document.createElement("form");
     editProjectForm.classList.add("edit-form");
 
-    // create delete button
+    // delete button
     const deleteElement = document.createElement("div");
     deleteElement.classList.add("delete-project-item-button");
     deleteElement.innerHTML = `<i class="fa-regular fa-trash-can"></i>`;
     editProjectForm.appendChild(deleteElement);
 
-    // create input fields
+    // input fields
     const titleLabel = document.createElement("label");
     titleLabel.setAttribute("for", "edit-project-name");
     titleLabel.textContent = "Project Name";
@@ -100,7 +100,7 @@ class ProjectList {
     colorInput.setAttribute("id", "edit-project-color");
     colorInput.value = project.projectColor;
 
-    // create update button
+    // update button
     const editProjectFormButton = document.createElement("button");
     editProjectFormButton.setAttribute("type", "submit");
     editProjectFormButton.textContent = "Update";
@@ -126,7 +126,7 @@ class ProjectList {
 
       updateProject(project, { title: newName, projectColor: newColor });
 
-      this.toggleMenu();
+      toggleMenu();
       this.render();
       renderTodoList(this.projects, this.todos);
     });
@@ -137,7 +137,7 @@ class ProjectList {
 
       deleteProject(this.projects, project, this.todos);
 
-      this.toggleMenu();
+      toggleMenu();
       this.render();
       renderTodoList(this.projects, this.todos);
     });
@@ -175,7 +175,7 @@ class ProjectList {
     addProjectItem.appendChild(document.createTextNode("Add Project"));
 
     addProjectItem.addEventListener("click", () => {
-      this.toggleMenu();
+      toggleMenu();
       this.projectFormInput();
     });
 
@@ -287,10 +287,6 @@ class ProjectList {
     document.body.appendChild(projectFormModal);
 
     return projectForm;
-  }
-
-  toggleMenu() {
-    toggleStyles();
   }
 }
 

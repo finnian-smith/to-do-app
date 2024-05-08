@@ -65,9 +65,7 @@
     position: relative;
     bottom: auto;
     left: auto;
-    width: 100%;
     height: auto;
-    display: flex;
     justify-content: flex-start;
     padding: 0px;
     border: none;
