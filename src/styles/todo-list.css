@@ -4,6 +4,10 @@
   height: fit-content;
 }
 
+.no-todos-message {
+  padding: 20px 0;
+}
+
 .date-header {
   border-top: 1px solid var(--horizontal-line-break-color);
   padding: 20px 0 0;

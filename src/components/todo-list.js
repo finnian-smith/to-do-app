@@ -19,8 +19,12 @@ class TodoList {
   render() {
     this.container.textContent = "";
 
-    this.createDateHeaders();
-    this.appendTodoByDate();
+    if (this.todos.length === 0) {
+      this.noTodosToDisplay();
+    } else {
+      this.createDateHeaders();
+      this.appendTodoByDate();
+    }
     this.attachFormInput();
   }
 
@@ -284,6 +288,7 @@ class TodoList {
       deleteTodoItem(todo, this.todos, this.projects);
 
       hideModal();
+      updateProjectCount(this.projects);
       this.render();
     });
 
@@ -493,18 +498,30 @@ class TodoList {
       return;
     }
 
-    const uniqueDates = new Set(filteredTodos.map((todo) => todo.dueDate));
-    this.createDateHeadersFromDates(uniqueDates);
+    if (filteredTodos.length === 0) {
+      this.noTodosToDisplay();
+    } else {
+      const uniqueDates = new Set(filteredTodos.map((todo) => todo.dueDate));
+      this.createDateHeadersFromDates(uniqueDates);
 
-    filteredTodos.forEach((todo) => {
-      const todoElement = this.createTodoElement(todo);
-      const dateHeader = this.container.querySelector(
-        `[date="${todo.dueDate}"]`
-      );
-      if (dateHeader) {
-        dateHeader.appendChild(todoElement);
-      }
-    });
+      filteredTodos.forEach((todo) => {
+        const todoElement = this.createTodoElement(todo);
+        const dateHeader = this.container.querySelector(
+          `[date="${todo.dueDate}"]`
+        );
+        if (dateHeader) {
+          dateHeader.appendChild(todoElement);
+        }
+      });
+    }
+  }
+
+  // message for when there are no todo items
+  noTodosToDisplay() {
+    const noTodosMessage = document.createElement("p");
+    noTodosMessage.classList.add("no-todos-message");
+    noTodosMessage.textContent = "No items to display";
+    this.container.appendChild(noTodosMessage);
   }
 
   // set priority colour
