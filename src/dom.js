@@ -18,20 +18,22 @@ import {
 
 // projects
 const project1 = createProject("General", "#000000");
-const project2 = createProject("Shopping", "#ff0000");
-const project3 = createProject("Personal", "#0000FF");
+const project2 = createProject("Personal", "#F4C430");
+const project3 = createProject("Training", "#0000ff");
+const project4 = createProject("Work", "#ff0000");
 
-const projects = [project1, project2, project3];
+const projects = [project1, project2, project3, project4];
 
 // todos
-const todo1 = createTodo("Buy milk", "2024-03-25", "Low", "Shopping");
-const todo2 = createTodo("Gym", "2024-03-25", "Medium", "Personal");
-const todo3 = createTodo("Buy protein", "2024-03-26", "High", "Shopping");
-const todo4 = createTodo("Gym", "2024-03-27", "Medium", "Personal");
-const todo5 = createTodo("Buy tickets", "2024-03-29", "Low", "Shopping");
-const todo6 = createTodo("Gym", "2024-04-01", "Medium", "Personal");
+const todo1 = createTodo("Call mom", "2024-04-30", "High", "Personal");
+const todo2 = createTodo("Gym session", "2024-04-30", "Low", "Training");
+const todo3 = createTodo("Rubber duck debug", "2024-05-01", "Medium", "Work");
+const todo4 = createTodo("Read book", "2024-05-03", "Low", "Personal");
+const todo5 = createTodo("Running session", "2024-05-04", "Medium", "Training");
+const todo6 = createTodo("Finish project", "2024-05-09", "High", "Work");
+const todo7 = createTodo("Gym session", "2024-05-10", "Medium", "Training");
 
-const todos = [todo1, todo2, todo3, todo4, todo5, todo6];
+const todos = [todo1, todo2, todo3, todo4, todo5, todo6, todo7];
 
 // dynamically add todos to projects
 projects.forEach((project) => {
